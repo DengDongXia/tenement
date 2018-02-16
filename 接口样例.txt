@@ -53,6 +53,15 @@
 				"reason":"失败原因"
 
 	5.获取所有用户 -管理员专用 (带有session验证)
+		请求样例
+			"type":"all"
+		响应样例
+			成功
+				"ret":"true"
+				"data":"[userInfo]" 该数组有至少一个元素
+			失败
+				"ret":"false"
+				"reason":"失败原因"
 
 	后台不作跳转操作，前端根据返回结果判断是否跳转，后台只记录Session,只在没有Session时作跳转(比如没有登陆就进入用户页面)
 
@@ -65,19 +74,24 @@
 				"filter":"筛选类型",可选的参数有
 					"price"表示价格筛选,
 					"keyword"表示关键词筛选,
-					两者互斥
+					"publisherId"表示按房东id获取房子，房东查看自己发布的信息时使用
+					三者互斥
+					"none"不使用用
 				如果选择"price",额外传入	
 					"maxPrice":"价格上界"
 					"minPrice":"价格下界"
 					两者不能同时为空
 				如果选择"keyword",额外传入
 					"keywordParam":"待搜索参数"
+				如果选择"publisherId",额外传入
+					"id":"房东id"
 			如果需要排序
 				"sort":"排序类型",可选的参数有
 					"priceUp"表示价格升序
 					"priceDown"表示价格降序
 					"timeUp"表示发布时间升序
 					"timeDown"表示发布时间降序
+
 		响应样例
 			成功
 				"ret":"true"
@@ -114,7 +128,7 @@
 				"reason":"失败原因" (带有session验证)
 
 
-	3.编辑客房信息 -房东 (带有session验证)
+	3.编辑客房信息 -房东 (带有session验证) //省点事就不让用户换图片了
 		请求样例
 			"type":"edit"
 			"id" :"客房id"
@@ -125,7 +139,6 @@
 			"address":"详细地址"
 			"price":"每月价格"
 			"comment":"具体信息"
-			"pic":"[picUrl]" 该数组最少一个元素最多5个元素
 			"count":"剩余客房数量"
 		响应样例
 			成功
@@ -153,6 +166,7 @@
 		响应样例
 			成功
 				"ret":"true"
+				"data":houseInfo
 			失败
 				"ret":"false"
 				"reason":"失败原因"
@@ -180,18 +194,22 @@
 				可选的有
 				"id"根据订单id查看具体订单,
 				"userId"根据下单者查看所有订单信息,用于房客查看自己的下单记录,
-				"all"返回所有订单信息，用于管理员查看订单
-			"page":
-				当"filter"为"userId"或者"all"时需要额外传入，表示获取的页数
+				"publisherId"根据房东查看所有订单信息,用于房东查看自己的房子的订单,
+				"publisherIdUnconfirm"根据房东查看所有房东还没确认的订单，用于房东确认,
+				"all"返回所有订单信息，用于管理员查看所有订单,
+				"unConfirm"返回所有还没审批的订单，用于管理员审批
+			"toPage":
+				当"filter"不为"id"时需要额外传入，表示获取的页数
 			"id":
 				当"filter"为"id"时,传入相应的订单id
 				当"filter"为"userId"时,传入相应的用户id
+				当"filter"为"publisherId"或"publisherIdUnconfirm"时,传入相应的房东id(也是用户id)
 		响应样例
 			成功
 				"ret":"true"
 				"data":[orderInfo] 当请求的"filter"为"id"时，只有一个元素,其他的至少一个元素
-				"nowPage":当"filter"为"userId"或者"all"时才会返回的，表示当前页数
-				"sumPage":当"filter"为"userId"或者"all"时才会返回的，表示当前页数
+				"nowPage":当"filter"不为"id"时才会返回的，表示当前页数
+				"sumPage":当"filter"不为"id"时才会返回的，表示当前页数
 			失败
 				"ret":"false"
 				"reason":"失败原因"
@@ -207,7 +225,7 @@
 			失败
 				"ret":"false"
 				"reason":"失败原因"
-				
+
 	4.房东确认订单 -(带有session验证)
 		请求样例
 			"type":"confirm"
@@ -348,6 +366,7 @@ houseInfo结构
 	"addredd":"详细地址"
 	"comment":"详细信息"
 	"publisher":"房东id"
+	"pic":[picUrl]
 	"count":剩余数量
 }
 
