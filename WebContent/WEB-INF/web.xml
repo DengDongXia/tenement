@@ -28,6 +28,7 @@
   <servlet-name>admin</servlet-name>
   <url-pattern>/admin</url-pattern>
 </servlet-mapping>
+
 <servlet>
   <servlet-name>upload</servlet-name>
   <servlet-class>servlet.FileUploadServlet</servlet-class>
@@ -36,6 +37,7 @@
   <servlet-name>upload</servlet-name>
   <url-pattern>/upload</url-pattern>
 </servlet-mapping>
+
 <servlet>
   <servlet-name>house</servlet-name>
   <servlet-class>servlet.HouseServlet</servlet-class>
@@ -44,6 +46,7 @@
   <servlet-name>house</servlet-name>
   <url-pattern>/house</url-pattern>
 </servlet-mapping>
+
 <servlet>
   <servlet-name>notice</servlet-name>
   <servlet-class>servlet.NoticeServlet</servlet-class>
@@ -52,6 +55,7 @@
   <servlet-name>notice</servlet-name>
   <url-pattern>/notice</url-pattern>
 </servlet-mapping>
+
 <servlet>
   <servlet-name>order</servlet-name>
   <servlet-class>servlet.OrderServlet</servlet-class>

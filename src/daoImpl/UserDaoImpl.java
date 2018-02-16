@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import dao.DataBaseDao;
 import dao.UserDao;
 import model.User;
-import model.Users;
+import model.User;
 
 public class UserDaoImpl extends DataBaseDao implements UserDao{
 
