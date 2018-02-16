@@ -1,0 +1,385 @@
+(带有session验证) 指的是 后台会从session中获取当前登录的用户，根据该用户进行操作
+
+
+
+用户模块 \user
+	1.登录
+		请求样例
+			"type":"login"
+			"email":"邮箱账号"
+			"psw":"密码"
+			"t":"用户类型" 1为房东，2为房客
+		响应样例
+			成功
+				"ret":"true"
+			失败
+				"ret":"false"
+				"reason":"失败原因"
+
+	2.注册
+		请求样例
+			"type":"regist"
+			"email":"邮箱账号"
+			"name":"用户昵称"
+			"psw":"密码"
+			"phone":"手机号码"
+			"t":"用户类型" 1为房东，2为房客
+		响应样例
+			成功
+				"ret":"true"
+			失败
+				"ret":"false"
+				"reason":"失败原因"
+
+	3.注销
+		请求样例
+			"type":"logout"
+		响应样例
+			成功
+				"ret":"true"
+			失败
+				"ret":"false"
+				"reason":"失败原因"
+
+	4.用户详情页获取用户信息 - 用户查看自己信息 (带有session验证)
+		请求样例
+			"type":"info"
+		响应样例
+			成功
+				"ret":"true"
+				"data":"[userInfo]" 该数组只有一个元素
+			失败
+				"ret":"false"
+				"reason":"失败原因"
+
+	5.获取所有用户 -管理员专用 (带有session验证)
+
+	后台不作跳转操作，前端根据返回结果判断是否跳转，后台只记录Session,只在没有Session时作跳转(比如没有登陆就进入用户页面)
+
+客房模块 \house
+	1.获取客房信息 -首页获取
+		请求样例
+			"type":"all"
+			"toPage":"请求的页数"
+			如果需要筛选
+				"filter":"筛选类型",可选的参数有
+					"price"表示价格筛选,
+					"keyword"表示关键词筛选,
+					两者互斥
+				如果选择"price",额外传入	
+					"maxPrice":"价格上界"
+					"minPrice":"价格下界"
+					两者不能同时为空
+				如果选择"keyword",额外传入
+					"keywordParam":"待搜索参数"
+			如果需要排序
+				"sort":"排序类型",可选的参数有
+					"priceUp"表示价格升序
+					"priceDown"表示价格降序
+					"timeUp"表示发布时间升序
+					"timeDown"表示发布时间降序
+		响应样例
+			成功
+				"ret":"true"
+				"data":"[houseInfo]" 该数组至少有一个元素，最多表示每页能显示的个数
+				"nowPage":"当前请求页，与请求中的toPage保持一致"
+				"sumPage":"请求的数组的总页数"
+
+		示范:
+			请求:
+				{"type":"all","toPage":"2","filter":"keyword","keywordParam":"广金","sort":"priceUp"}
+				表示请求搜索带有"广金"的客房按价格升序排序的第二页
+				{"type":"all","toPage":"3","filter":"","sort":"timeDown"}
+				表示请求所有客房信息按发布时间降序排序的第三页
+
+
+
+	2.发布客房信息 -房东发布 (带有session验证)
+		请求样例
+			"type":"publish"
+			"title":"客房标题"
+			"province":"省"
+			"city":"市"
+			"region":"区"
+			"address":"详细地址"
+			"price":"每月价格"
+			"comment":"具体信息"
+			"pic":"[picUrl]" 该数组最少一个元素最多5个元素
+			"count":"剩余客房数量"
+		响应样例
+			成功
+				"ret":"true"
+			失败
+				"ret":"false"
+				"reason":"失败原因" (带有session验证)
+
+
+	3.编辑客房信息 -房东 (带有session验证)
+		请求样例
+			"type":"edit"
+			"id" :"客房id"
+			"title":"客房标题"
+			"province":"省"
+			"city":"市"
+			"region":"区"
+			"address":"详细地址"
+			"price":"每月价格"
+			"comment":"具体信息"
+			"pic":"[picUrl]" 该数组最少一个元素最多5个元素
+			"count":"剩余客房数量"
+		响应样例
+			成功
+				"ret":"true"
+			失败
+				"ret":"false"
+				"reason":"失败原因" 
+
+
+	4.删除客房信息 -房东 (带有session验证)
+		请求样例
+			"type":"delete"
+			"id" :"客房id"
+		响应样例
+			成功
+				"ret":"true"
+			失败
+				"ret":"false"
+				"reason":"失败原因" 
+
+	5.具体客房信息 - 具体客房页面信息
+		请求样例
+			"type":"info"
+			"id":"客房id"
+		响应样例
+			成功
+				"ret":"true"
+			失败
+				"ret":"false"
+				"reason":"失败原因"
+
+
+
+订单模块 \order
+
+	1.创建订单 - 房客下单 (带有session验证)
+		请求样例
+			"type":"publish"
+			"houseId":"客房id"
+		响应样例
+			成功
+				"ret":"true"
+				"data":"下的单房东的手机号"
+			失败
+				"ret":"false"
+				"reason":"失败原因"
+
+	2.查看订单  (带有session验证)
+		请求样例
+			"type":"get"
+			"filter":
+				可选的有
+				"id"根据订单id查看具体订单,
+				"userId"根据下单者查看所有订单信息,用于房客查看自己的下单记录,
+				"all"返回所有订单信息，用于管理员查看订单
+			"page":
+				当"filter"为"userId"或者"all"时需要额外传入，表示获取的页数
+			"id":
+				当"filter"为"id"时,传入相应的订单id
+				当"filter"为"userId"时,传入相应的用户id
+		响应样例
+			成功
+				"ret":"true"
+				"data":[orderInfo] 当请求的"filter"为"id"时，只有一个元素,其他的至少一个元素
+				"nowPage":当"filter"为"userId"或者"all"时才会返回的，表示当前页数
+				"sumPage":当"filter"为"userId"或者"all"时才会返回的，表示当前页数
+			失败
+				"ret":"false"
+				"reason":"失败原因"
+
+	3.审核订单 - 管理员审核 (带有session验证)
+	 	请求样例
+			"type":"audit"
+			"id": "订单id"
+			"action": "1或者-1" 1表示审核通过 -1表示未通过
+		响应样例
+			成功
+				"ret":"true"
+			失败
+				"ret":"false"
+				"reason":"失败原因"
+				
+	4.房东确认订单 -(带有session验证)
+		请求样例
+			"type":"confirm"
+			"id": "订单id"
+		响应样例
+			成功
+				"ret":"true"
+			失败
+				"ret":"false"
+				"reason":"失败原因"
+
+
+消息提醒 \notice
+	
+	1.获取未读消息数量 (带有session验证)
+		请求样例
+			"type":"count"
+		响应样例
+			成功
+				"ret":"true"
+				"data":"未读消息数量"
+			失败
+				"ret":"false"
+				"reason":"失败原因"
+
+	2.获取未读消息 (带有session验证) 该操作在返回后会啊不所有未读设置为已读
+		请求样例
+			"type":"unread"
+		响应样例
+			成功
+				"ret":"true"
+				"data":"[noticeInfo]"
+			失败
+				"ret":"false"
+				"reason":"失败原因"
+
+	3.获取所有消息 (带有session验证)
+		请求样例
+			"type":"all"
+		响应样例
+			成功
+				"ret":"true"
+				"data":"[noticeInfo]"
+			失败
+				"ret":"false"
+				"reason":"失败原因"
+
+	
+
+
+管理员模块 \admin
+	1.登录
+		请求样例
+			"type":"login"
+			"userName":"管理员账号"
+			"psw":"密码"
+		响应样例
+			成功
+				"ret":"true"
+			失败
+				"ret":"false"
+				"reason":"失败原因"
+	2.注销
+		请求样例
+			"type":"logout"
+		响应样例
+			成功
+				"ret":"true"
+			失败
+				"ret":"false"
+				"reason":"失败原因"
+
+
+上传图片模块 \upload
+	1.上传图片
+		使用ajaxFileUpload
+			引入js <script type="text/javascript" src="./js/ajaxfileupload.js"></script>
+
+			上传<input type="file" accept='image/*' id="fupl" name="fupl">
+
+			上传脚本
+			$.ajaxFileUpload
+			(
+				{
+					url: '.\upload', //用于文件上传的服务器端请求地址
+					secureuri: false, //是否需要安全协议，一般设置为false
+					fileElementId: 'fupl', //文件上传域的ID
+					dataType: 'json', //返回值类型 一般设置为json
+					success: function (data, status)  //服务器成功响应处理函数
+					{
+						//$("#img1").attr("src", data.imgurl);
+						console.log(data);
+						if(data.ret=="true"){
+							console.log("上传成功");
+						}else{
+							console.log("上传失败");
+						}
+					},
+					error: function (data, status, e)//服务器响应失败处理函数
+					{
+						console.log("上传失败");
+						console.log(e);
+					}
+				}
+			);
+
+		响应样例
+			成功
+				"ret":"true"
+				"path":"图片存在服务端的相对地址"
+			失败
+				"ret":"false"
+				"reason":"失败原因"
+			
+
+
+
+userInfo结构
+{
+	"id":用户id
+	"email":用户邮箱
+	"userName":用户昵称
+	"psw":"用户密码"
+	"head":"用户头像" //可有可无 建议写死头像 所有人用一个头像
+	"isLandlord":是否是房东
+	"phone":手机号
+}
+
+
+houseInfo结构
+{
+	"id":客房id
+	"title":"标题"
+	"province":"省"
+	"city":"城市"
+	"region":"区"
+	"price":"月租"
+	"addredd":"详细地址"
+	"comment":"详细信息"
+	"publisher":"房东id"
+	"count":剩余数量
+}
+
+
+picUrl结构
+{
+	"url":图片url
+}
+
+
+orderInfo结构
+{
+	"id":订单id
+	"userId":下单者id
+	"userName":下单者昵称
+	"userPhone":下单者手机
+	"houseId":"客房id"
+	"houseTitle":客房标题
+	"housePrice":客房月租
+	"houseAddress":客房地址
+	"houseComment":客房详细信息
+	"publisherId":房东id
+	"publisherName":房东昵称
+	"publisherPhone":房东手机
+	"confirm":订单状态
+}
+
+
+noticeInfo结构
+{
+	"id":提醒id
+	"userTo":"接收者id"
+	"comment":消息内容
+	"isRead":"是否已读"
+}
