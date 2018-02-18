@@ -8,23 +8,36 @@
      return false;
     } 
     // 异步提交表单数据
-    $.post('/user', {
-	    	type:"regist",
-			email: $("#input-email").val(),
-			name: $("#input-name").val(),
-			psw: $("#input-password").val(),
-			phone: $("#input-phone").val(),
-			t: $("input[type='radio']:checked").val()
-
-		}, function(data, textStatus) {
-			if(data[0].ret == 'true'){
+    $.ajax({
+    	url: './user',
+    	type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify({
+    		"type":"regist",
+			"email": $("#input-email").val(),
+			"name": $("#input-name").val(),
+			"psw": $("#input-password").val(),
+			"phone": $("#input-phone").val(),
+			"t": $("input[type='radio']:checked").val()
+		}),
+    })
+    .done(function() {
+    	if(data[0].ret == 'true'){
 				alert("注册成功！");
 				location.href = "../login.jsp";   //当后端注册成功后,返回true,跳转到登录界面
-			}else{
+		}else{
 				$("#tag").find(".error").remove();	
 			    var text = "<div class='error form-group'><span>"+data[0].reason+"</span></div>" ;
 				$("#tag").append(text);
-			}
-		});
+		}
+    })
+    .fail(function() {
+    	// console.log("error");
+    })
+    .always(function() {
+    	// console.log("complete");
+    });
+    
+    
     
    });
