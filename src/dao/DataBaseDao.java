@@ -7,7 +7,7 @@ public class DataBaseDao {
 		Connection conn=null;
 		try{
 			Context ic =new InitialContext();
-			DataSource source=(DataSource)ic.lookup("java:comp/env/jdbc/market");
+			DataSource source=(DataSource)ic.lookup("java:comp/env/jdbc/tenement");
 			conn=source.getConnection();
 		}catch(SQLException exception){
 			exception.printStackTrace();

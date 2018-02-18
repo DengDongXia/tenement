@@ -49,9 +49,9 @@ public class UserServlet  extends HttpServlet{
 		
 		String type = JsonUtil.removeQuote(map.get("type").toString());
 		if("login".equals(type)) {
-			String userName = JsonUtil.removeQuote(map.get("userName").toString());
+			String email = JsonUtil.removeQuote(map.get("email").toString());
 			String psw = JsonUtil.removeQuote(map.get("psw").toString());
-			User user = InstanceUtil.udi.login(userName, psw);
+			User user = InstanceUtil.udi.login(email, psw);
 			if(user==null) {
 				res.put("ret", "false");
 				res.put("reason", "’À∫≈ªÚ√‹¬Î¥ÌŒÛ");

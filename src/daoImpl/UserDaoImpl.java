@@ -46,8 +46,8 @@ public class UserDaoImpl extends DataBaseDao implements UserDao{
 
 	@Override
 	public boolean regist(User user) {
-		String sql="insert into user(email, psw, head, phone, userName,isLandlord) values(?,?,?,?,?,?)";
-		String[] params = {user.getEmail(), user.getPassword(), user.getHead(), user.getPhone(), user.getUserName(), ""+user.getIsLandlord()};
+		String sql="insert into user(id, email, psw, head, phone, userName,isLandlord) values(?,?,?,?,?,?,?)";
+		String[] params = {user.getId(), user.getEmail(), user.getPassword(), user.getHead(), user.getPhone(), user.getUserName(), user.getIsLandlord()?"1":"0"};
 		return this.executeSQL(sql, params)==1;
 	}
 
@@ -107,7 +107,7 @@ public class UserDaoImpl extends DataBaseDao implements UserDao{
 		return u;
 	}
 	public boolean hasUser(String id){
-		String sql = "select * from users where id=?";
+		String sql = "select * from user where id=?";
 		User user = null;
 		try{
 			conn = this.getConn();
@@ -133,7 +133,7 @@ public class UserDaoImpl extends DataBaseDao implements UserDao{
 		return user!=null;
 	}
 	public boolean hasUserWithEmail(String email){
-		String sql = "select * from users where email=?";
+		String sql = "select * from user where email=?";
 		User user = null;
 		try{
 			conn = this.getConn();
