@@ -9,7 +9,7 @@ CREATE TABLE user(
 	head varchar(100)  NOT NULL Default '1.gif',
 	isLandlord boolean Default false,
 	phone varchar(11) NOT NULL,
-	primary key(id)
+	primary key(email)
 )DEFAULT CHARSET=utf8;
 
 
@@ -44,7 +44,7 @@ CREATE TABLE notice(
 )DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE order(
+CREATE TABLE orders(
 	id int AUTO_INCREMENT NOT NULL,
 	userId char(8) NOT NULL,
 	houseId int NOT NULL,
@@ -58,3 +58,5 @@ CREATE TABLE picture(
 	houseId int NOT NULL,
 	picPath varchar(100) NOT NULL
 )DEFAULT CHARSET=utf8;
+
+
