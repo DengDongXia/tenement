@@ -19,8 +19,8 @@ function getAllInfo() {
 //不使用筛选来获取房源,但是使用排序
 function getHouseByNoFilter(toPage,sortWay) {
 	$.ajax({
-		url: 'data/house.json',
-		// url: './house',
+		// url: 'data/house.json',
+		url: './house',
 		type: 'POST',
 		dataType: 'json',
 		data: JSON.stringify({
@@ -46,8 +46,8 @@ function getHouseByNoFilter(toPage,sortWay) {
 // 异步请求消息数量
 function getNoticeNum() {
 	$.ajax({
-		url: 'data/notice.json',
-		// url: './notice',
+		// url: 'data/notice.json',
+		url: './notice',
 		type: 'POST',
 		dataType: 'json',
 		data: JSON.stringify({
