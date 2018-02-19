@@ -113,6 +113,14 @@ nav div{
 	border-color: #BC1108;
 }
 
+#search ul .choose{
+	background-color: #BC1108;
+	color: #ffffff;
+}
+
+#search ul .choose:hover{
+	color: #ffffff;
+}
 .filter input{
 	width: 25%;
 	padding: 5px 10px;
@@ -134,7 +142,7 @@ nav div{
 	line-height: 24px;
 	background-color: #069215;
 	color: #ffffff;
-	border: 2px solid #069215;
+	border: 1px solid #069215;
 	cursor: pointer;
 }
 
@@ -177,11 +185,13 @@ nav div{
 }
 
 .content #houseTitle span{
-	margin-right:3%;
+	margin-left:3%;
 }
 
 .content #houseTitle span:first-child{
 	display: inline-block;
+	margin-left: 0;
+	margin-right: 50%;
 	width: 12%;
 	height: 32px;
 	background-color: #069215;
@@ -196,7 +206,11 @@ nav div{
 	cursor: pointer;
 }
 
-.content section{
+.content .chooseSort{
+	color:  #BC1108;
+}
+
+.content li{
 	display: flow-root;
 	width: 96%;
 	padding: 2%;
@@ -204,11 +218,11 @@ nav div{
 	cursor: pointer;
 }
 
-.content section:hover{
+.content li:hover{
 	background-color: #f8f8f8;
 }
 
-.content section:hover .contentTitle{
+.content li:hover .contentTitle{
 	color: #BC1108;
 }
 
@@ -286,15 +300,21 @@ nav div{
 	line-height: 35px;
 	border:1px solid #dddddd;
 	text-align: center;
-	margin-right: 1px;
+	margin-right: 3px;
+	cursor: pointer;
 }
 
-#switchPage span:first-child{
+#switchPage span:hover{
+	color: #BC1108;
+	border-color: #BC1108;
+}
+
+#switchPage #choosePage{
 	background-color: #555;
 	color: #ffffff;
 }
 
-#switchPage span:last-child{
+#switchPage span:first-child,#switchPage span:last-child{
 	width: 70px;
 }
 

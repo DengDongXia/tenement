@@ -72,33 +72,5 @@ $(function(){
     $(this).triggerHandler("blur");   //获得焦点时触发事件
   });//end blur
 
-  
-
-	/*登录部分*/
-	// 登录异步获取图片验证码
-	$('#getPicVerification').click(function(){
-		getPicCode();
-	});
-
-	//异步请求图片验证码
-	function getPicCode(argument) {
-		$.ajax({
-			url: 'login/identifyCode.jsp',
-			type: 'POST',
-			dataType: 'json',
-			// data: {param1: 'value1'},
-		})
-		// .done(function() {
-		// 	console.log("success");
-		// })
-		// .fail(function() {
-		// 	console.log("error");
-		// })
-		// .always(function() {
-		// 	console.log("complete");
-		// });
-		
-	}
-
 })
 
