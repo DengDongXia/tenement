@@ -1,0 +1,30 @@
+@charset 'utf-8'; 
+.detailNav ul{
+	margin-left: 0;
+}
+.detailNav ul li:first-child{
+	margin-left: 0;margin-right: 83.1%;
+}
+
+.detailContent{
+	width: 100%;
+	margin-bottom: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+#detailPic{
+	width: 80%;
+	height: 350px;
+	margin: 0 auto;
+	padding: 20px;
+	border: 1px solid #dddddd;
+	overflow: hidden;
+}
+
+#detailPic img{
+	display: block;
+	width: 70%;
+	height: auto;
+	margin: 0 auto;
+}
