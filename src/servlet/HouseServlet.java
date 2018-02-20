@@ -87,7 +87,7 @@ public class HouseServlet extends HttpServlet{
 						}else if("timeDown".equals(sort)) {
 							arr = InstanceUtil.hdi.getHouseWithKeywordSortByTime(keyword, false);
 						}
-					}else if("publiserId".equals(filter)) {
+					}else if("publisherId".equals(filter)) {
 						String id = JsonUtil.removeQuote(map.get("id").toString());
 						if("priceUp".equals(sort)) {
 							arr = InstanceUtil.hdi.getHouseWithPublisherIdSortByPrice(id, true);
@@ -98,6 +98,7 @@ public class HouseServlet extends HttpServlet{
 						}else if("timeDown".equals(sort)) {
 							arr = InstanceUtil.hdi.getHouseWithPublisherIdSortByTime(id, false);
 						}
+						
 					}else if("none".equals(filter)) {
 						if("priceUp".equals(sort)) {
 							arr = InstanceUtil.hdi.getHouseSortByPrice(true);
@@ -111,7 +112,11 @@ public class HouseServlet extends HttpServlet{
 					}
 					if(arr!=null) {
 						int sumPage = ToolsUtil.getPages(arr, ConstansUtil.HOUSE_COUNT_PER_PAGE);
-						if(Integer.parseInt(toPage) > sumPage) {
+						if(sumPage==0) {
+							res.put("ret", "false");
+							res.put("reason", "没有数据");	
+						}
+						else if(Integer.parseInt(toPage) > sumPage) {
 							res.put("ret", "false");
 							res.put("reason", "请求页数超过总页数");		
 						}else {

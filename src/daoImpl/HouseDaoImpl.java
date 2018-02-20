@@ -441,12 +441,12 @@ public class HouseDaoImpl extends DataBaseDao implements HouseDao{
 	@Override
 	public HouseModel[] getHouseWithKeywordSortByTime(String keyword, boolean asc) {
 		String sql1 = "select * from house"
-				+ " where title like %"+keyword+"% "
-				+ " or province like %"+keyword+"% "
-				+ " or city like %"+keyword+"% "
-				+ " or region like %"+keyword+"% "
-				+ " or address like %"+keyword+"% "
-				+ " or comment like %"+keyword+"% ";
+				+ " where title like '%"+keyword+"%' "
+				+ " or province like '%"+keyword+"%' "
+				+ " or city like '%"+keyword+"%' "
+				+ " or region like '%"+keyword+"%' "
+				+ " or address like '%"+keyword+"%' "
+				+ " or comment like '%"+keyword+"%' ";
 		if(asc) {
 			sql1 = sql1+" order by id ASC";
 		}else {
