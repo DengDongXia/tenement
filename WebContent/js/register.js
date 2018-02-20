@@ -22,12 +22,12 @@
 		}),
     })
     .done(function() {
-    	if(data[0].ret == 'true'){
+    	if(data.ret == 'true'){
 				alert("注册成功！");
 				location.href = "../login.jsp";   //当后端注册成功后,返回true,跳转到登录界面
 		}else{
 				$("#tag").find(".error").remove();	
-			    var text = "<div class='error form-group'><span>"+data[0].reason+"</span></div>" ;
+			    var text = "<div class='error form-group'><span>"+data.reason+"</span></div>" ;
 				$("#tag").append(text);
 		}
     })
