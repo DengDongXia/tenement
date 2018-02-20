@@ -14,16 +14,16 @@
 			<div></div>
 			<div class="shortCut">	
 				<ul>
-					<li><a href="personal.html">个人中心</a></li>
-					<li><a href="notice.html">消息<span id="countNotice"></span></a></li>
-					<li><a href="login.html">登录</a></li>
-					<li><a href="register.html" target="_blank">注册</a></li> 
+					<li><a href="personal.jsp">个人中心</a></li>
+					<li><a href="notice.jsp">消息<span id="countNotice"></span></a></li>
+					<li><a href="login.jsp">登录</a></li>
+					<li><a href="register.jsp" target="_blank">注册</a></li> 
 					<li id="lgout">注销</li> 
 				</ul>		
 			</div>
 		</nav>
 		<div>
-			<div id="logo"><a href="index.html"><img src="images/logo.png" alt="logo" /></a></div>
+			<div id="logo"><a href="index.jsp"><img src="images/logo.png" alt="logo" /></a></div>
 			<div class="makeup">
 				<div id="search">
 					<ul id="filterBg">

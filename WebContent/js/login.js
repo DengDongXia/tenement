@@ -20,7 +20,7 @@
     })
     .done(function(data) {
     	 if(data.ret == 'true')
-				location.href = "../index.jsp";   //当后端登录成功后,返回true,跳转到登录界面
+				location.href = "./index.jsp";   //当后端登录成功后,返回true,跳转到登录界面
 			else{
 				$("#input-password").find(".error").remove();	
 			    var text = "<div class='error form-group'><span>"+data.reason+"</span></div>" ;

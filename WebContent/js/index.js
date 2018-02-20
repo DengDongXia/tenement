@@ -80,9 +80,9 @@ function renderPage(obj) {
 		// 插入所返回的房源信息
 		$.each(obj.data, function(index, val) {
 			var link = "<li><a href='houseDetail.html?id="+val.id+"' target='_blank'>";
-			var pic = "<div class='housePic'><img src='"+val.pic[0].url+"' alt='被出租的房屋图片''></div>";
+			var pic = "<div class='housePic'><img src='"+val.pic[0]+"' alt='被出租的房屋图片''></div>";
 			var text = "<div class='aboutText'><div class='text'><p class='contentTitle'>"+val.title+"</p><p class='contentComment'>"+val.comment+"</p>";
-			var address = "<p class='city'><span><img src='images/address.png'></span><span>"+val.province+">"+val.city+">"+val.region+"</span></p><p class='adress'>详细地址：<span>"+val.addredd+"</span></p></div>";
+			var address = "<p class='city'><span><img src='images/address.png'></span><span>"+val.province+">"+val.city+">"+val.region+"</span></p><p class='adress'>详细地址：<span>"+val.address+"</span></p></div>";
 			var other = "<div class='otherInfo'><p class='price'>月租：<span>"+val.price+"/月</span></p><p class='count'>剩余套间：<span>"+val.count+"</span></p></div></div></a></li>";
 			$("#houseInfo").append(link+pic+text+address+other);
 		});
