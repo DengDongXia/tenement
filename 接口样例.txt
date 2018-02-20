@@ -363,7 +363,7 @@ houseInfo结构
 	"city":"城市"
 	"region":"区"
 	"price":"月租"
-	"addredd":"详细地址"
+	"address":"详细地址"
 	"comment":"详细信息"
 	"publisher":"房东id"
 	"pic":[picUrl]
@@ -372,9 +372,8 @@ houseInfo结构
 
 
 picUrl结构
-{
-	"url":图片url
-}
+	图片url
+
 
 
 orderInfo结构
