@@ -102,8 +102,18 @@ function renderPage(obj) {
 				break;
 			}
 		}
-		pageText += "<span id='morePage'>...</span><span class='page'>"+parseInt(obj.sumPage)+"</span>";
-		pageText += "<span class='page' id='nextPage'>下一页</span>";
+		pageText += "<span class='page' id='morePage'>...</span><span class='page'>"+parseInt(obj.sumPage)+"</span>";
+		if(page != (parseInt(obj.sumPage) - 1) && page != parseInt(obj.sumPage)){
+			pageText += "<span class='page' id='morePage'>...</span><span class='page'>"+parseInt(obj.sumPage)+"</span>";
+		}else{
+			if(page != parseInt(obj.sumPage)){
+				pageText += "<span class='page'>"+parseInt(obj.sumPage)+"</span>";
+			}
+		}
+		// 当前页不是最后一页时，插入下一页按钮
+		if(page != parseInt(obj.sumPage)){
+			pageText += "<span class='page' id='nextPage'>下一页</span>";
+		}
 		$("#switchPage").append(pageText);
 		//给页面按钮绑定事件
 		/*以下为分页按钮切换内容*/
@@ -124,7 +134,7 @@ function renderPage(obj) {
 				// 不刷新页面
 			}
 			else if($(this).is('#morePage')){   //点击更多页
-				clickPage = parseInt(toPage) + 4;
+				clickPage = parseInt(toPage) + 3;
 				clickPage += '';  //转换成字符串
 				timePriceSort(clickPage,getNowSortWay()); //调用函数,判断是否存在筛选条件的对象
 			}
