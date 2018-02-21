@@ -314,7 +314,7 @@ nav div{
 	color: #ffffff;
 }
 
-#switchPage span:first-child,#switchPage span:last-child{
+#switchPage #lastPage,#switchPage #nextPage{
 	width: 70px;
 }
 

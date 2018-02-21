@@ -19,8 +19,8 @@ function getAllInfo() {
 //不使用筛选来获取房源,但是使用排序
 function getHouseByNoFilter(toPage,sortWay) {
 	$.ajax({
-		// url: 'data/house.json',
-		url: './house',
+		url: 'data/house.json',
+		// url: './house',
 		type: 'POST',
 		dataType: 'json',
 		data: JSON.stringify({
@@ -102,7 +102,6 @@ function renderPage(obj) {
 				break;
 			}
 		}
-		pageText += "<span class='page' id='morePage'>...</span><span class='page'>"+parseInt(obj.sumPage)+"</span>";
 		if(page != (parseInt(obj.sumPage) - 1) && page != parseInt(obj.sumPage)){
 			pageText += "<span class='page' id='morePage'>...</span><span class='page'>"+parseInt(obj.sumPage)+"</span>";
 		}else{
@@ -118,31 +117,25 @@ function renderPage(obj) {
 		//给页面按钮绑定事件
 		/*以下为分页按钮切换内容*/
 		$('#switchPage').find('.page').click(function(event) {
-			var clickPage;
+			var clickPage = toPage;
 			// 判断选中的分页按钮是哪个
 			if($(this).is('#lastPage')){        // 点击上一页
 				clickPage = parseInt(toPage) - 1;
-				clickPage += '';  //转换成字符串
-				timePriceSort(clickPage,getNowSortWay()); //调用函数,判断是否存在筛选条件的对象
 			}
 			else if($(this).is('#nextPage')){   //点击下一页
 				clickPage = parseInt(toPage) + 1;
-				clickPage += '';  //转换成字符串
-				timePriceSort(clickPage,getNowSortWay()); //调用函数,判断是否存在筛选条件的对象
 			}
 			else if($(this).is('#choosePage')){ //点击当前选中页
-				// 不刷新页面
+				clickPage = toPage;
 			}
 			else if($(this).is('#morePage')){   //点击更多页
 				clickPage = parseInt(toPage) + 3;
-				clickPage += '';  //转换成字符串
-				timePriceSort(clickPage,getNowSortWay()); //调用函数,判断是否存在筛选条件的对象
 			}
 			else{  
-				clickPage = $(this).text() + '';  //获取该页的数值
-				alert(clickPage);
-				timePriceSort(clickPage,getNowSortWay()); //调用函数,判断是否存在筛选条件的对象
+				clickPage = $(this).text();  //获取该页的数值
 			}
+			clickPage += '';  //转换成字符串
+			timePriceSort(clickPage,getNowSortWay()); //调用函数,判断是否存在筛选条件的对象
 		});
 /*以上为分页按钮切换内容*/
 
@@ -233,8 +226,8 @@ function getNowSortWay() {
 // 调用函数priceFilter(),传入最低价格和最高价格
 function priceFilter(minPrice,maxPrice,toPage,sortWay) {
 	$.ajax({
-		// url: 'data/house.json',
-		url: './house',
+		url: 'data/house.json',
+		// url: './house',
 		type: 'POST',
 		dataType: 'json',
 		data: JSON.stringify({
@@ -261,8 +254,8 @@ function priceFilter(minPrice,maxPrice,toPage,sortWay) {
 // 调用函数keywordFilter,根据关键字搜索
 function keywordFilter(keyword,toPage,sortWay){
 	$.ajax({
-		// url: 'data/house.json',
-		url: './house',
+		url: 'data/house.json',
+		// url: './house',
 		type: 'POST',
 		dataType: 'json',
 		data: JSON.stringify({
@@ -288,8 +281,8 @@ function keywordFilter(keyword,toPage,sortWay){
 // 调用函数houseIdFilter(),根据房东id号搜索
 function houseIdFilter(houseId,toPage,sortWay){
 	$.ajax({
-		// url: 'data/house.json',
-		url: './house',
+		url: 'data/house.json',
+		// url: './house',
 		type: 'POST',
 		dataType: 'json',
 		data: JSON.stringify({
