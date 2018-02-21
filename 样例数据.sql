@@ -1,10 +1,10 @@
-insert into user(id, email, userName, psw, head, isLandlord, phone) values("00000001","test1@qq.com","test1","test1","null",false,"13800138000");
-insert into user(id, email, userName, psw, head, isLandlord, phone) values("00000002","test2@qq.com","test2","test2","null",false,"13800138000");
-insert into user(id, email, userName, psw, head, isLandlord, phone) values("00000003","test3@qq.com","test3","test3","null",false,"13800138000");
-insert into user(id, email, userName, psw, head, isLandlord, phone) values("00000004","test4@qq.com","test4","test4","null",true,"13800138000");
-insert into user(id, email, userName, psw, head, isLandlord, phone) values("00000005","test5@qq.com","test5","test5","null",true,"13800138000");
-insert into user(id, email, userName, psw, head, isLandlord, phone) values("00000006","test6@qq.com","test6","test6","null",true,"13800138000");
-insert into user(id, email, userName, psw, head, isLandlord, phone) values("00000007","test7@qq.com","test7","test7","null",true,"13800138000");
+insert into user(id, email, userName, psw, head, isLandlord, phone) values("00000001","test1@qq.com","test1","11111111","null",false,"13800138000");
+insert into user(id, email, userName, psw, head, isLandlord, phone) values("00000002","test2@qq.com","test2","11111111","null",false,"13800138000");
+insert into user(id, email, userName, psw, head, isLandlord, phone) values("00000003","test3@qq.com","test3","11111111","null",false,"13800138000");
+insert into user(id, email, userName, psw, head, isLandlord, phone) values("00000004","test4@qq.com","test4","11111111","null",true,"13800138000");
+insert into user(id, email, userName, psw, head, isLandlord, phone) values("00000005","test5@qq.com","test5","11111111","null",true,"13800138000");
+insert into user(id, email, userName, psw, head, isLandlord, phone) values("00000006","test6@qq.com","test6","11111111","null",true,"13800138000");
+insert into user(id, email, userName, psw, head, isLandlord, phone) values("00000007","test7@qq.com","test7","11111111","null",true,"13800138000");
 
 
 insert into admin(id, userName, psw) values("00000001","admin1","admin1");
