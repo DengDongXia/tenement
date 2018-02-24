@@ -63,6 +63,19 @@
 				"ret":"false"
 				"reason":"失败原因"
 
+    6.获取登录用户
+        请求样例
+            "type":"statu"
+        响应样例
+            成功
+                "ret":"true"
+                "isLogin":"true/false"
+                如果isLogin为true
+                    "data":userInfo
+                如果isLogin为false则没有data字段
+            失败
+                "ret":"false"
+                "reason":"失败原因"
 	后台不作跳转操作，前端根据返回结果判断是否跳转，后台只记录Session,只在没有Session时作跳转(比如没有登陆就进入用户页面)
 
 客房模块 \house

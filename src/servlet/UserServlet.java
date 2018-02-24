@@ -146,6 +146,21 @@ public class UserServlet  extends HttpServlet{
 				res.put("ret", "false");
 				res.put("reason", "ÄúÎ´µÇÂ¼");
 			}
+		}else if("statu".equals(type)){
+			if(session!=null) {
+				User u = (User)session.getAttribute("user");
+				if(u!=null) {
+					res.put("ret", "true");
+					res.put("isLogin", "true");
+					res.put("data", u);
+				}else {
+					res.put("ret", "true");
+					res.put("isLogin", "false");
+				}
+			}else {
+				res.put("ret", "true");
+				res.put("isLogin", "false");
+			}
 		}else {
 			res.put("ret", "false");
 			res.put("reason", "ÄúÎ´µÇÂ¼");
