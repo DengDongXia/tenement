@@ -310,7 +310,19 @@
 			失败
 				"ret":"false"
 				"reason":"失败原因"
+	3.管理员登录状态
+		请求样例
+			"type":"statu"
+		响应样例
+			成功
+				"ret":"true"
+				"isAdmin":"true/false"
+				如果isAdmin为true
+                    "data":AdminInfo
 
+			失败
+				"ret":"false"
+				"reason":"失败原因"
 
 上传图片模块 \upload
 	1.上传图片
@@ -413,4 +425,12 @@ noticeInfo结构
 	"userTo":"接收者id"
 	"comment":消息内容
 	"isRead":"是否已读"
+}
+
+
+adminInfo结构
+{
+	"id":管理员id
+	"userName":管理员账号/昵称
+	"password":管理员密码
 }
