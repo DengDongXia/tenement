@@ -1,0 +1,76 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	background-color: #f2f2f2;
+	color: #8e8e8e;
+	font: 12px/1.5 Microsoft YaHei,Heiti SC,tahoma,arial,Hiragino Sans GB,\\5B8B\4F53,sans-serif;
+}
+
+/*导航和查询部分样式*/
+nav{
+	width: 100%;
+	z-index: 10;
+}
+
+nav div{
+	position: relative;
+	width: 100%;
+	height:10px;
+	background-color: #ffffff;
+}
+
+.shortCut{
+	width: 82%;
+	height: 40px;
+	padding-left: 9%;
+	padding-right: 9%;
+	color: #ffffff;
+	font-size: 14px;
+	background-color: #069215;
+	text-align: right;
+}
+
+.shortCut ul li{
+	line-height: 40px;
+	display: inline-block;
+	margin-left: 20px;
+	cursor: pointer;
+}
+
+.shortCut ul li:hover,.shortCut ul li a:hover{
+	color: #BC1108;
+}
+
+.shortCut ul li a{
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.detailNav{
+	position: relative;
+}
+
+.detailNav ul{
+	display: inline-block;
+	text-align: right;
+}
+.shortCut ul .index{
+	position: absolute;
+	left: 9%;
+}
+
+/*以上为导航条样式*/
+
+/*脚部*/
+footer{
+	width: 100%;
+	height: 120px;
+	border-top: 2px solid #dddddd;
+	background-color: #025F0D;
+	text-align: center;
+	font-size: 16px;
+	padding-top: 30px;
+}

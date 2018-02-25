@@ -1,0 +1,87 @@
+@charset 'utf-8';
+header{
+	min-height: auto;
+}
+
+/*以下为主要信息的样式*/
+.content{
+	display: flow-root;
+	width: 70%;
+	min-height: 500px;
+	margin: 20px auto;
+	background-color: #ffffff;
+}
+/*以上为主要信息的样式*/
+
+
+/*所有已发布客房信息样式*/
+.noticeInfos{
+	width: 100%;
+	min-height: 500px;
+	float: left;
+	border-left: 1px solid #ececec;
+}
+
+.noticeInfos .noticeTitle{
+	margin-top: 15px;
+	padding-bottom: 15px;
+	text-align: center;
+	border-bottom: 1px solid #ececec;
+	font-size: 20px;
+	color: #444;
+	font-weight: bold; 
+}
+
+.noticeInfos .chooseNotice{
+	box-shadow: 1px 1px 1px 1px #ececec;
+}
+	
+.noticeInfos .chooseNotice span{
+	display: inline-block;
+	height: 40px;
+	padding: 5px 20px;
+	line-height: 40px;
+	color: #444;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.noticeInfos .chooseNotice span:hover{
+	color: #069215;
+}
+
+.noticeInfos .chooseNotice .choose{
+	background-color: #069215;
+	color: #ffffff;
+	border-radius: 8px 8px 0 0;
+}
+
+.noticeInfos .chooseNotice .choose:hover{
+	color: #ffffff;
+}
+
+.content ul li{
+	padding: 15px 25px;
+	line-height: 30px;
+	cursor: default;
+	list-style: none;
+	font-size: 16px;
+	color: #444;
+	border-bottom: 1px solid #ececec;
+}
+
+.content ul .noticeContent{
+	text-indent: 2em;
+}
+
+#allNoticeBg li .error{
+	font-size: 24px;
+	color: #999;
+	text-align: center;
+	border-bottom: none;
+}
+
+
+
+
+
