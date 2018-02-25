@@ -59,6 +59,21 @@ public class AdminServlet extends HttpServlet{
 		}else if("logout".equals(type)) {	
 			session.removeAttribute("admin");
 			res.put("ret", "true");
+		}else if("statu".equals(type)){
+			if(session!=null) {
+				Admin a = (Admin)session.getAttribute("admin");
+				if(a!=null) {
+					res.put("ret", "true");
+					res.put("isAdmin", "true");
+					res.put("data", a);
+				}else {
+					res.put("ret", "true");
+					res.put("isAdmin", "false");
+				}
+			}else {
+				res.put("ret", "true");
+				res.put("isAdmin", "false");
+			}
 		}else {
 			res.put("ret", "false");
 			res.put("reason", "Î´Öª²ÎÊı");
