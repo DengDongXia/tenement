@@ -1,0 +1,230 @@
+@charset 'utf-8';
+header{
+	min-height: auto;
+}
+
+/*以下为主要信息的样式*/
+.content{
+	display: flow-root;
+	width: 82%;
+	min-height: 500px;
+	margin: 20px auto;
+	background-color: #ffffff;
+}
+/*以上为主要信息的样式*/
+
+/*用户信息样式*/
+.userInfo{
+	width: 25%;
+	padding-top: 50px;
+	float: left;
+}
+
+.userInfo div{
+	text-align: center;
+}
+
+.userInfo p{
+	line-height: 30px;
+	font-size: 16px;
+	color: #444;
+}
+
+.userInfo .owner{
+	line-height: 38px;
+	text-align: center;
+	font-weight: bold;
+	color: #BC1108;
+	font-size: 18px;
+
+}
+
+.userInfo .label{
+	display: inline-block;
+	width: 40%;
+	text-align: right;
+}
+
+#imgBg{
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	margin: 0 auto;
+	border: 2px solid #ececec;
+	overflow: hidden;
+}
+
+#imgBg img{
+	width: auto;
+	height: 150px;
+}
+
+.userInfo #create{
+	margin-top: 20px;
+	text-align: center;
+}
+
+#create span{
+	display: inline-block;
+	padding: 10px 20px;
+	border: 1px solid #BC1108;;
+	color: #BC1108;
+	border-radius: 8px;
+	cursor: pointer;
+}
+
+#create span:hover{
+	color: #ffffff;
+	background-color: #BC1108; 
+}
+
+/*用户信息样式*/
+
+
+/*所有已发布客房信息样式*/
+.orderInfos{
+	width: 74.92%;
+	min-height: 500px;
+	float: left;
+	border-left: 1px solid #ececec;
+}
+
+.orderInfos .orderTitle{
+	margin-top: 15px;
+	padding-bottom: 15px;
+	text-align: center;
+	border-bottom: 1px solid #ececec;
+	font-size: 20px;
+	color: #444;
+	font-weight: bold; 
+}
+
+.orderInfos .chooseOrder{
+	box-shadow: 1px 1px 1px 1px #ececec;
+}
+	
+.orderInfos .chooseOrder span{
+	display: inline-block;
+	height: 40px;
+	padding: 5px 20px;
+	line-height: 40px;
+	color: #444;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.orderInfos .chooseOrder span:hover{
+	color: #069215;
+}
+
+.orderInfos .chooseOrder .choose{
+	background-color: #069215;
+	color: #ffffff;
+	border-radius: 8px 8px 0 0;
+}
+
+.orderInfos .chooseOrder .choose:hover{
+	color: #ffffff;
+}
+
+#edit{
+	margin-left: 30px;
+	color: #069215;
+}
+
+.otherInfo p a{
+	text-decoration: none;
+}
+
+#delete,#edit{
+	cursor: pointer;
+}
+
+/*所有已发布客房信息样式*/
+
+/*未确定订单样式*/
+.orderInfo .aboutText{
+	width: 100%;
+	padding-left: 0;
+}
+
+.orderInfo .aboutText a{
+	text-decoration: none;
+}
+
+.orderInfo .aboutText .text span{
+	margin-right: 30px;
+}
+
+.orderInfo .aboutText .price{
+	color: #BC1108;
+}
+
+.orderInfo .aboutText .otherInfo{
+	padding-top: 0;
+	text-align: left;
+}
+
+.orderInfo .aboutText .otherInfo p:first-child,
+.orderInfo .aboutText .orderNumber{
+	font-weight: normal;
+	font-size: 14px;
+}
+
+.orderInfo .aboutText .otherInfo p:first-child{
+	text-align: center;
+}
+
+.orderInfo .otherInfo .label{
+	display: inline-block;
+	width: 40%;
+	text-align: right;
+	color: #666;
+}
+
+#indeterminateInfo #ok{
+	display: block;
+	width: 100px;
+	height: 35px;
+	margin: 10px auto;
+	line-height: 35px;
+	padding: 5px 20px;
+	border: 1px solid #BC1108;
+	border-radius: 8px;
+	text-align: center;
+	cursor: pointer;
+}
+
+#indeterminateInfo #ok:hover{
+	color: #ffffff;
+	background-color: #BC1108;
+}
+
+.content li{
+	cursor: default;
+}
+/*未确定订单样式*/
+
+/*所有订单*/
+#allordersInfo #ok{
+	color: #069215;
+}
+
+#allordersInfo #ok,#allReordersInfo #ok{
+	color: #069215;
+}
+
+#ok .label span{
+	color: #666;
+}
+
+#switchPage span{
+	width: auto;
+	padding: 2px 10px;
+	margin: 0 3px;
+}
+
+
+
+
+

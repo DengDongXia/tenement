@@ -2,3 +2,7 @@
 .loginMain{
 	padding-bottom: 40px;
 }
+
+header{
+	min-height: auto;
+}

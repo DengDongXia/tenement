@@ -1,10 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<title>房屋租赁系统主页</title>
+	<link rel="stylesheet" type="text/css" href="css/common.css">
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
@@ -13,12 +14,8 @@
 		<nav>
 			<div></div>
 			<div class="shortCut">	
-				<ul>
-					<li><a href="personal.jsp">个人中心</a></li>
+				<ul id="nav">
 					<li><a href="notice.jsp">消息<span id="countNotice"></span></a></li>
-					<li><a href="login.jsp">登录</a></li>
-					<li><a href="register.jsp" target="_blank">注册</a></li> 
-					<li id="lgout">注销</li> 
 				</ul>		
 			</div>
 		</nav>
@@ -59,7 +56,7 @@
 			<div id="houseTitle"><span>房源信息</span><span class="sort" id="timeUp">按时间升序</span><span class="sort chooseSort" id="timeDown">按时间降序</span><span class="sort" id="priceUp">按价格升序</span><span class="sort" id="priceDown">按价格降序</span></div>
 			<ul id="houseInfo">
 				<li>
-					<a href="houseDetail.html" target="_blank">
+					<a href="houseDetail.jsp" target="_blank">
 					<div class="housePic"><img src="images/house_1.jpg" alt="被出租的房屋图片"></div>
 					<div class="aboutText">
 						<div class="text">
@@ -76,7 +73,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="houseDetail.html" target="_blank">
+					<a href="houseDetail.jsp" target="_blank">
 					<div class="housePic"><img src="images/house_1.jpg" alt="被出租的房屋图片"></div>
 					<div class="aboutText">
 						<div class="text">

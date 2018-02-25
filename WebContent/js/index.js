@@ -1,5 +1,6 @@
 $().ready(function() {
 	$('.filter').hide();  //令所有筛选条件隐藏
+	aboutUser();    //获取用户是否登录信息，进行相关的功能操作
 	getAllInfo();    //获取所有房子信息
 	getNoticeNum();  //获取消息数量
 });
@@ -9,7 +10,40 @@ toPage = "1"; //声明一个全局变量，用于保存当前的页数
 var filterChooser; //用于保存当前选中的筛选方式对象
 var sorterTag; //用于保存当前选中的排序对象，默认初始化排序方式为timeDown
 
-	
+/*以下为判断用户是否登录，从而显示对应的导航功能*/
+function aboutUser() {
+	$.ajax({
+		// url: 'data/statu.json',
+		url: './user',
+		type: 'POST',
+		dataType: 'json',
+		data: JSON.stringify({
+			"type":"statu"
+		}),
+	})
+	.done(function(obj) {
+		if(obj.ret == 'true'){
+			if(obj.isLogin == 'true'){
+				$('#nav').append("<li><a href='personal.jsp'>个人中心</a></li>");
+				$('#nav').append("<li id='logout'>注销</li> ");
+				setLogout();   //绑定注销事件
+			}else{
+				$('#nav').append("<li><a href='login.jsp'>登录</a></li>");
+				$('#nav').append("<li><a href='register.jsp' target='_blank'>注册</a>");
+			}
+		}
+		else
+			console("获取用户信息失败！原因：" + obj.reason);
+	})
+	.fail(function() {
+		alert("页面获取出错");
+	})
+	.always(function() {
+		// console.log("complete");
+	});
+}
+/*以上为判断用户是否登录，从而显示对应的导航功能*/
+
 /*以下为页面初始化即请求的内容，包括请求所有房源信息和消息数量*/
 // 异步请求后台第一页的所有数据
 function getAllInfo() {
@@ -19,8 +53,8 @@ function getAllInfo() {
 //不使用筛选来获取房源,但是使用排序
 function getHouseByNoFilter(toPage,sortWay) {
 	$.ajax({
-		url: 'data/house.json',
-		// url: './house',
+		// url: 'data/house.json',
+		url: './house',
 		type: 'POST',
 		dataType: 'json',
 		data: JSON.stringify({
@@ -79,7 +113,7 @@ function renderPage(obj) {
 	if(obj.ret == 'true'){
 		// 插入所返回的房源信息
 		$.each(obj.data, function(index, val) {
-			var link = "<li><a href='houseDetail.html?id="+val.id+"' target='_blank'>";
+			var link = "<li><a href='houseDetail.jsp?houseId="+val.id+"' target='_blank'>";
 			var pic = "<div class='housePic'><img src='"+val.pic[0]+"' alt='被出租的房屋图片''></div>";
 			var text = "<div class='aboutText'><div class='text'><p class='contentTitle'>"+val.title+"</p><p class='contentComment'>"+val.comment+"</p>";
 			var address = "<p class='city'><span><img src='images/address.png'></span><span>"+val.province+">"+val.city+">"+val.region+"</span></p><p class='adress'>详细地址：<span>"+val.address+"</span></p></div>";
@@ -129,7 +163,11 @@ function renderPage(obj) {
 				clickPage = toPage;
 			}
 			else if($(this).is('#morePage')){   //点击更多页
-				clickPage = parseInt(toPage) + 3;
+				if((parseInt(toPage) + 3) < parseInt(obj.sumPage)){
+					clickPage = parseInt(toPage) + 3;
+				}else{
+					clickPage = parseInt(toPage) + 1;
+				}
 			}
 			else{  
 				clickPage = $(this).text();  //获取该页的数值
@@ -226,8 +264,8 @@ function getNowSortWay() {
 // 调用函数priceFilter(),传入最低价格和最高价格
 function priceFilter(minPrice,maxPrice,toPage,sortWay) {
 	$.ajax({
-		url: 'data/house.json',
-		// url: './house',
+		// url: 'data/house.json',
+		url: './house',
 		type: 'POST',
 		dataType: 'json',
 		data: JSON.stringify({
@@ -254,8 +292,8 @@ function priceFilter(minPrice,maxPrice,toPage,sortWay) {
 // 调用函数keywordFilter,根据关键字搜索
 function keywordFilter(keyword,toPage,sortWay){
 	$.ajax({
-		url: 'data/house.json',
-		// url: './house',
+		// url: 'data/house.json',
+		url: './house',
 		type: 'POST',
 		dataType: 'json',
 		data: JSON.stringify({
@@ -281,8 +319,8 @@ function keywordFilter(keyword,toPage,sortWay){
 // 调用函数houseIdFilter(),根据房东id号搜索
 function houseIdFilter(houseId,toPage,sortWay){
 	$.ajax({
-		url: 'data/house.json',
-		// url: './house',
+		// url: 'data/house.json',
+		url: './house',
 		type: 'POST',
 		dataType: 'json',
 		data: JSON.stringify({
@@ -391,7 +429,8 @@ function judgeSortObj(obj,toPage,sortWay) {
 /*以上为排序和分页调用的公用函数*/
 
 /*以下为点击注销按钮时，触发注销事件*/
-$('#lgout').click(function(event) {
+function setLogout(){
+	$('#logout').click(function(event) {
 	$.ajax({
 		url: './user',
 		type: 'POST',
@@ -401,8 +440,10 @@ $('#lgout').click(function(event) {
 		}),
 	})
 	.done(function(obj) {
-		if(obj.ret == 'true')
+		if(obj.ret == 'true'){
 			alert("注销成功");
+			location.href = "./login.jsp";
+		}
 		else
 			alert("注销失败！原因：" + obj.reason);
 	})
@@ -413,5 +454,6 @@ $('#lgout').click(function(event) {
 		// console.log("complete");
 	});
 });
+}
 /*以上为点击注销按钮时，触发注销事件*/
 
