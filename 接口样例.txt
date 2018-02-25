@@ -318,7 +318,7 @@
 				"ret":"true"
 				"isAdmin":"true/false"
 				如果isAdmin为true
-                    "data":AdminInfo
+                    "data":adminInfo
 
 			失败
 				"ret":"false"
