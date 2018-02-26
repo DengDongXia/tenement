@@ -64,6 +64,7 @@ function getDetailInfo() {
 			$('#comment').append(obj.data.comment);  //添加详细内容
 			$('#price').append(obj.data.price+"元/月");  //添加月租
 			$('#count').append(obj.data.count);  //添加剩余數量
+			fun();
 		}
 		else
 			alert("获取客房信息失败！原因：" + obj.reason);
@@ -84,27 +85,28 @@ function getUrlId(name) {
 }
 
 /*以下为轮播图切换图片代码*/
-var picObj = $('#picBg>li:first-child'); //this保存当前显示的图片
-$('#detailPic').find('span').click(function(event) {
-	picObj.hide();
-	if($(this).is('#last')){
-		if(picObj.is('#picBg>li:first-child')){
-			picObj = $('#picBg>li:last-child');
+function fun(){
+	var picObj = $('#picBg>li:first-child'); //this保存当前显示的图片
+	$('#detailPic').find('span').click(function(event) {
+		picObj.hide();
+		if($(this).is('#last')){
+			if(picObj.is('#picBg>li:first-child')){
+				picObj = $('#picBg>li:last-child');
+			}else{
+				picObj = picObj.prev(); 
+			}
+			
 		}else{
-			picObj = picObj.prev(); 
+			if(picObj.is('#picBg>li:last-child')){
+				picObj = $('#picBg>li:first-child');
+			}else{
+				picObj = picObj.next(); 
+			}
 		}
-		
-	}else{
-		if(picObj.is('#picBg>li:last-child')){
-			picObj = $('#picBg>li:first-child');
-		}else{
-			picObj = picObj.next(); 
-		}
-	}
-	picObj.show();
-});
+		picObj.show();
+	});
 /*以上为轮播图切换图片代码*/
-
+}
 
 /*点击下单按钮，同时判断是否有下单的权利*/
 $('#order').click(function(event) {
