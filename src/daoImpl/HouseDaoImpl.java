@@ -590,6 +590,7 @@ public class HouseDaoImpl extends DataBaseDao implements HouseDao{
 		try {
 			conn = this.getConn();
 			pstmt = conn.prepareStatement(sql1);
+			pstmt.setInt(1, Integer.parseInt(id));
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				hm = new HouseModel();

@@ -58,14 +58,18 @@ public class OrderServlet extends HttpServlet{
 				if("publish".equals(type)) {
 					String id = JsonUtil.removeQuote(map.get("houseId").toString());
 					HouseModel hm = InstanceUtil.hdi.getHouseWithId(id);
-					
-					User publisher = InstanceUtil.odi.publishOrder(ToolsUtil.HouseModelToHouse(hm), user);
-					if(publisher!=null) {
-						res.put("ret", "true");
-						res.put("data",publisher.getPhone());
-					}else {
+					if(user.getIsLandlord()) {
 						res.put("ret", "false");
-						res.put("reason", "获取房东信息失败");
+						res.put("reason", "你是房东，不能下单");
+					}else {
+						User publisher = InstanceUtil.odi.publishOrder(ToolsUtil.HouseModelToHouse(hm), user);
+						if(publisher!=null) {
+							res.put("ret", "true");
+							res.put("data",publisher.getPhone());
+						}else {
+							res.put("ret", "false");
+							res.put("reason", "获取房东信息失败");
+						}
 					}
 				}else if("get".equals(type)) {
 					String filter = JsonUtil.removeQuote(map.get("filter").toString());

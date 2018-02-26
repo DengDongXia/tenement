@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -151,7 +152,14 @@ public class HouseServlet extends HttpServlet{
 						hm.setPublisher(user.getId());
 						hm.setRegion(region);
 						hm.setTitle(title);
-						String[] pic = (String[]) map.get("pic");
+						ArrayList l = (ArrayList)map.get("pic");
+						
+						ArrayList<String> li = new ArrayList<String>();
+						for(Object o:l) {
+							li.add(JsonUtil.removeQuote(o.toString()));
+						}
+						String[] pi = new String[l.size()];
+						String[] pic = li.toArray(pi);
 						
 						if(InstanceUtil.hdi.publishHouse(hm, pic)) {
 							res.put("ret", "true");

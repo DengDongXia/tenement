@@ -57,7 +57,7 @@ function getDetailInfo() {
 	.done(function(obj) {
 		if(obj.ret == 'true'){
 			$.each(obj.data.pic, function(index, val) {
-				 $('#picBg').append("<li><img alt='房子详情图片' src='"+val.url+"'></li>")
+				 $('#picBg').append("<li><img alt='房子详情图片' src='"+val+"'></li>")
 			});
 			$('#title').append(obj.data.title);  //添加标题
 			$('#address').append("<span>"+obj.data.province+"</span>><span>"+obj.data.city+"</span>><span>"+obj.data.region+"</span><span class='moreAddress'>详细地址："+obj.data.address+"</span>");

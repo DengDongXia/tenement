@@ -29,12 +29,12 @@
 		<div class="ceateOrder">
 			<p class="tagTitle">发布新的客房信息</p>
 			<div class="orderContent">
-				<p><span class="label">客房标题：</span><input type="text" name="" placeholder="请输入客房信息的标题" required ></p>
+				<p><span class="label">客房标题：</span><input type="text" name="" id="infoTitle" placeholder="请输入客房信息的标题" required ></p>
 				<p class="area"><span class="label">所在地区：</span><input type="text" name="" id="province" placeholder="所在省份" required >--<input type="text" name="" id="city" placeholder="所在市" required >--<input type="text" name="" id="region" placeholder="所在城区" required ></p>
-				<p><span class="label">详细地址：</span><input type="text" name="" placeholder="请输入客房所在详细地址" required ></p>
-				<p><span class="label">每月租金：</span><input type="text" name="" placeholder="请输入客房的月租" required ></p>
-				<p><span class="label">剩余数量：</span><input type="text" name="" placeholder="请输入客房的剩余数量" required ></p>
-				<p><span class="label">上传图片：</span><input type="file" name="" id="pic" accept='image/*' title="最多上传5张图片" required multiple></p>
+				<p><span class="label">详细地址：</span><input type="text" name="" id="address" placeholder="请输入客房所在详细地址" required ></p>
+				<p><span class="label">每月租金：</span><input type="text" name="" id="price" placeholder="请输入客房的月租" required ></p>
+				<p><span class="label">剩余数量：</span><input type="text" name="" id="count" placeholder="请输入客房的剩余数量" required ></p>
+				<p><span class="label">上传图片：</span><input type="file" name="pic" id="pic" accept='image/*' title="最多上传5张图片" required multiple/></p>
 				<p class="commentBg"><span class="label">详细内容：</span><textarea id="comment"></textarea></p>
 				<p><button id="publish">发布</button></p>
 			</div>

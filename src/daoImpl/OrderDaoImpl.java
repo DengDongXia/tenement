@@ -20,7 +20,7 @@ public class OrderDaoImpl extends DataBaseDao implements OrderDao{
 	@Override
 	public User publishOrder(House house, User user) {
 	
-		String sql1 = "insert into order(userId,houseId) values(?,?)";
+		String sql1 = "insert into orders(userId,houseId) values(?,?)";
 		String sql2 = "select * from user where id=?";
 		String[] params = {user.getId(), ""+house.getId()};
 		if(this.executeSQL(sql1, params)==1) {
@@ -54,14 +54,14 @@ public class OrderDaoImpl extends DataBaseDao implements OrderDao{
 
 	@Override
 	public OrderModel[] getOrder() {
-		String sql = "select t1.id, t1.userName, t1.phone "
-				+ " t2.id, t2.userName, t2.phone "
-				+ " t3.id, t3.title, t3.price, t3.address, t3.comment "
+		String sql = "select t1.id, t1.userName, t1.phone, "
+				+ " t2.id, t2.userName, t2.phone, "
+				+ " t3.id, t3.title, t3.price, t3.address, t3.comment, "
 				+ " t4.confirm, t4.id "
-				+ " from order t4 "
+				+ " from orders t4 "
 				+ " inner join user t1 on t4.userId=t1.id "
 				+ " inner join house t3 on t4.houseId=t3.id "
-				+ " inner join users t2 on t3.publisher=t2.id"
+				+ " inner join user t2 on t3.publisher=t2.id"
 				+ " order by t4.id DESC";
 		ArrayList<OrderModel> list = new ArrayList<OrderModel>();
 		OrderModel om = null;
@@ -98,14 +98,14 @@ public class OrderDaoImpl extends DataBaseDao implements OrderDao{
 
 	@Override
 	public OrderModel[] getOrderUnconfirm() {
-		String sql = "select t1.id, t1.userName, t1.phone "
-				+ " t2.id, t2.userName, t2.phone "
-				+ " t3.id, t3.title, t3.price, t3.address, t3.comment "
-				+ " t4.confirm, t4.id "
-				+ " from order t4 "
+		String sql = "select t1.id, t1.userName, t1.phone, "
+				+ " t2.id, t2.userName, t2.phone, "
+				+ " t3.id, t3.title, t3.price, t3.address, t3.comment, "
+				+ " t4.confirm, t4.id, "
+				+ " from orders t4 "
 				+ " inner join user t1 on t4.userId=t1.id "
 				+ " inner join house t3 on t4.houseId=t3.id "
-				+ " inner join users t2 on t3.publisher=t2.id"
+				+ " inner join user t2 on t3.publisher=t2.id"
 				+ " where t4.confirm=2"
 				+ " order by t4.id DESC";
 		ArrayList<OrderModel> list = new ArrayList<OrderModel>();
@@ -142,14 +142,14 @@ public class OrderDaoImpl extends DataBaseDao implements OrderDao{
 
 	@Override
 	public OrderModel[] getOrderWithId(String id) {
-		String sql = "select t1.id, t1.userName, t1.phone "
-				+ " t2.id, t2.userName, t2.phone "
-				+ " t3.id, t3.title, t3.price, t3.address, t3.comment "
+		String sql = "select t1.id, t1.userName, t1.phone, "
+				+ " t2.id, t2.userName, t2.phone, "
+				+ " t3.id, t3.title, t3.price, t3.address, t3.comment, "
 				+ " t4.confirm, t4.id "
-				+ " from order t4 "
+				+ " from orders t4 "
 				+ " inner join user t1 on t4.userId=t1.id "
 				+ " inner join house t3 on t4.houseId=t3.id "
-				+ " inner join users t2 on t3.publisher=t2.id"
+				+ " inner join user t2 on t3.publisher=t2.id"
 				+ " where t4.id=?"
 				+ " order by t4.id DESC";
 		ArrayList<OrderModel> list = new ArrayList<OrderModel>();
@@ -188,14 +188,14 @@ public class OrderDaoImpl extends DataBaseDao implements OrderDao{
 
 	@Override
 	public OrderModel[] getOrderWithUserId(String userId) {
-		String sql = "select t1.id, t1.userName, t1.phone "
-				+ " t2.id, t2.userName, t2.phone "
-				+ " t3.id, t3.title, t3.price, t3.address, t3.comment "
+		String sql = "select t1.id, t1.userName, t1.phone, "
+				+ " t2.id, t2.userName, t2.phone, "
+				+ " t3.id, t3.title, t3.price, t3.address, t3.comment, "
 				+ " t4.confirm, t4.id "
-				+ " from order t4 "
+				+ " from orders t4 "
 				+ " inner join user t1 on t4.userId=t1.id "
 				+ " inner join house t3 on t4.houseId=t3.id "
-				+ " inner join users t2 on t3.publisher=t2.id"
+				+ " inner join user t2 on t3.publisher=t2.id"
 				+ " where t1.id=?"
 				+ " order by t4.id DESC";
 		ArrayList<OrderModel> list = new ArrayList<OrderModel>();
@@ -233,14 +233,14 @@ public class OrderDaoImpl extends DataBaseDao implements OrderDao{
 
 	@Override
 	public OrderModel[] getOrderWithPublisher(String publisherId) {
-		String sql = "select t1.id, t1.userName, t1.phone "
-				+ " t2.id, t2.userName, t2.phone "
-				+ " t3.id, t3.title, t3.price, t3.address, t3.comment "
+		String sql = "select t1.id, t1.userName, t1.phone, "
+				+ " t2.id, t2.userName, t2.phone, "
+				+ " t3.id, t3.title, t3.price, t3.address, t3.comment, "
 				+ " t4.confirm, t4.id "
-				+ " from order t4 "
+				+ " from orders t4 "
 				+ " inner join user t1 on t4.userId=t1.id "
 				+ " inner join house t3 on t4.houseId=t3.id "
-				+ " inner join users t2 on t3.publisher=t2.id"
+				+ " inner join user t2 on t3.publisher=t2.id"
 				+ " where t2.id=?"
 				+ " order by t4.id DESC";
 		ArrayList<OrderModel> list = new ArrayList<OrderModel>();
@@ -278,14 +278,14 @@ public class OrderDaoImpl extends DataBaseDao implements OrderDao{
 
 	@Override
 	public OrderModel[] getOrderWithPublisherUnconfirm(String publisherId) {
-		String sql = "select t1.id, t1.userName, t1.phone "
-				+ " t2.id, t2.userName, t2.phone "
-				+ " t3.id, t3.title, t3.price, t3.address, t3.comment "
+		String sql = "select t1.id, t1.userName, t1.phone, "
+				+ " t2.id, t2.userName, t2.phone, "
+				+ " t3.id, t3.title, t3.price, t3.address, t3.comment, "
 				+ " t4.confirm, t4.id "
-				+ " from order t4 "
+				+ " from orders t4 "
 				+ " inner join user t1 on t4.userId=t1.id "
 				+ " inner join house t3 on t4.houseId=t3.id "
-				+ " inner join users t2 on t3.publisher=t2.id"
+				+ " inner join user t2 on t3.publisher=t2.id"
 				+ " where t2.id=? and t4.confirm=0"
 				+ " order by t4.id DESC";
 		ArrayList<OrderModel> list = new ArrayList<OrderModel>();
@@ -323,14 +323,14 @@ public class OrderDaoImpl extends DataBaseDao implements OrderDao{
 
 	@Override
 	public boolean auditOrder(String orderId, int action) {
-		String sql = "update order set confirm=? where id=?";
+		String sql = "update orders set confirm=? where id=?";
 		String[] params = {""+action, orderId};
 		return this.executeSQL(sql, params)==1;
 	}
 
 	@Override
 	public boolean confirmOrder(String id) {
-		String sql = "update order set confirm=2 where id=?";
+		String sql = "update orders set confirm=2 where id=?";
 		String[] params = {id};
 		return this.executeSQL(sql, params)==1;
 	}

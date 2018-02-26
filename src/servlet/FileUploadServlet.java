@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.*;  
 import java.io.IOException;  
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -61,13 +62,16 @@ public class FileUploadServlet extends HttpServlet{
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         Map<String, Object> res = new HashMap<String, Object>();
         String result;
+        
         //4.遍历上传列表
         try {
-            List<FileItem>list=sfu.parseRequest(request);
-            Iterator<FileItem>it=list.iterator();
-            
+            List<FileItem> list = sfu.parseRequest(request);
+            Iterator<FileItem> it = list.iterator();
+            System.out.println("testssssssssssss");
+            ArrayList<String> pas = new ArrayList<String>();
             while(it.hasNext())
             {
+            	System.out.println("testssssssssssss");
                 FileItem file=it.next();
                 String fileName=file.getName();
                 fileName=fileName.substring(fileName.lastIndexOf("\\")+1);
@@ -124,10 +128,12 @@ public class FileUploadServlet extends HttpServlet{
                 System.out.println(pt);
                 Thumbnails.of(pt).size(1000, 750).toFile(pt);
                // FileUploadUtil.zoomImage(pt, pt, 1000, 750);
-                res.put("ret", "true");
-                res.put("path", pn);
+                
+                pas.add(pn);
                 System.out.println(pn);
             }
+            res.put("ret", "true");
+            res.put("path", pas);
             
         } catch (FileUploadException e) {
             e.printStackTrace();

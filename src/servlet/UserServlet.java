@@ -51,13 +51,23 @@ public class UserServlet  extends HttpServlet{
 		if("login".equals(type)) {
 			String email = JsonUtil.removeQuote(map.get("email").toString());
 			String psw = JsonUtil.removeQuote(map.get("psw").toString());
+			String t = JsonUtil.removeQuote(map.get("t").toString());
 			User user = InstanceUtil.udi.login(email, psw);
 			if(user==null) {
 				res.put("ret", "false");
 				res.put("reason", "账号或密码错误");
-			}else {
+			}else if(user.getIsLandlord() && Integer.parseInt(t)==1){
 				session.setAttribute("user", user);
 				res.put("ret", "true");
+			}else if((!user.getIsLandlord()) && Integer.parseInt(t)!=1){
+				session.setAttribute("user", user);
+				res.put("ret", "true");
+			}else if((!user.getIsLandlord()) && Integer.parseInt(t)==1){
+				res.put("ret", "false");
+				res.put("reason", "你不是房东");
+			}else if(user.getIsLandlord() && Integer.parseInt(t)!=1){
+				res.put("ret", "false");
+				res.put("reason", "你不是房客");
 			}
 		}else if("regist".equals(type)) {
 			String email = JsonUtil.removeQuote(map.get("email").toString());
