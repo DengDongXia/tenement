@@ -48,7 +48,7 @@ function getData() {
 		if(obj.ret == 'true'){
 			var userInfo = obj.data[0]; 
 			isLandlord = userInfo.isLandlord;
-			if(userInfo.isLandlord == true){
+			if(userInfo.isLandlord == 'true'){
 				publisherId = userInfo.id; //保存房东的id
 				$('#owner').append('房东');
 				$('#userInfo').append("<a href='createHouseInfo.jsp'><p id='create'><span>发布新客房信息</span></p></a>");

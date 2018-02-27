@@ -29,10 +29,10 @@
 						  </div>
 						  <div class="form-group" id="checked">
 							<label class="radio-inline">
-							  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" checked> 用户登录
+							  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="2" checked> 用户登录
 							</label>
 							<label class="radio-inline">
-							  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">房东登录
+							  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="1">房东登录
 							</label>
 						  </div>
 						  <div class="input form-group">
