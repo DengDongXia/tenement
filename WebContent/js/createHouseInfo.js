@@ -17,8 +17,7 @@ $('#publish').click(function(event) {
 			},
 			error: function (data, status, e)//服务器响应失败处理函数
 			{
-				console.log(status);
-				console.log(e);
+				alert("图片上传失败，表单无法成功提交");
 			}
 		}
 	);
@@ -26,11 +25,9 @@ $('#publish').click(function(event) {
 
 //提交表单
 function submitForm(path) {
-	
 	// if(path.length < 0 || path.length >5)
 	if(judgeForm() == false) return;
-	//var houseId = getUrlId('houseId');  //获取url中的客房id
-	
+	var houseId = getUrlId('houseId');  //获取url中的客房id
 	$.ajax({
 		// url: 'data/updateHouse.json',
 		url: './house',

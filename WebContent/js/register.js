@@ -9,6 +9,7 @@
     } 
     // 异步提交表单数据
     $.ajax({
+        // url: 'data/LoginFail.json',
     	url: './user',
     	type: 'POST',
     	dataType: 'json',
@@ -21,7 +22,7 @@
 			"t": $("input[type='radio']:checked").val()
 		}),
     })
-    .done(function() {
+    .done(function(data) {
     	if(data.ret == 'true'){
 				alert("注册成功！");
 				location.href = "./login.jsp";   //当后端注册成功后,返回true,跳转到登录界面

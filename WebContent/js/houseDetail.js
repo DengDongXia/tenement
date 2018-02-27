@@ -57,14 +57,14 @@ function getDetailInfo() {
 	.done(function(obj) {
 		if(obj.ret == 'true'){
 			$.each(obj.data.pic, function(index, val) {
-				 $('#picBg').append("<li><img alt='房子详情图片' src='"+val+"'></li>")
+				 $('#picBg').append("<li><img alt='房子详情图片' src='"+val.url+"'></li>")
 			});
 			$('#title').append(obj.data.title);  //添加标题
 			$('#address').append("<span>"+obj.data.province+"</span>><span>"+obj.data.city+"</span>><span>"+obj.data.region+"</span><span class='moreAddress'>详细地址："+obj.data.address+"</span>");
 			$('#comment').append(obj.data.comment);  //添加详细内容
 			$('#price').append(obj.data.price+"元/月");  //添加月租
 			$('#count').append(obj.data.count);  //添加剩余數量
-			fun();
+			switchPic();   //给包含图片的li绑定切换事件
 		}
 		else
 			alert("获取客房信息失败！原因：" + obj.reason);
@@ -85,7 +85,7 @@ function getUrlId(name) {
 }
 
 /*以下为轮播图切换图片代码*/
-function fun(){
+function switchPic() {
 	var picObj = $('#picBg>li:first-child'); //this保存当前显示的图片
 	$('#detailPic').find('span').click(function(event) {
 		picObj.hide();
@@ -105,8 +105,9 @@ function fun(){
 		}
 		picObj.show();
 	});
-/*以上为轮播图切换图片代码*/
 }
+/*以上为轮播图切换图片代码*/
+
 
 /*点击下单按钮，同时判断是否有下单的权利*/
 $('#order').click(function(event) {
