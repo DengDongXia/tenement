@@ -53,6 +53,7 @@ public class NoticeServlet extends HttpServlet{
 					res.put("data",""+count);
 				}else if("unread".equals(type)) {
 					Notice[] arr = InstanceUtil.ndi.getUnread(user.getId());
+					InstanceUtil.ndi.read(arr);
 					res.put("ret", "true");
 					res.put("data", arr);
 				}else if("all".equals(type)) {

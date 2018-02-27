@@ -165,10 +165,14 @@ function dealAllOrderInfo(obj){
 			otherInfo += "<p><span class='label'>房东编号：</span>"+val.publisherId+"</p>";
 			otherInfo += "<p><span class='label'>昵称：</span>"+val.publisherName+"</p>";
 			otherInfo += "<p><span class='label'>手机号：</span>"+val.publisherPhone+"</p>";
-			if(val.confirm == 'true'){
-				otherInfo += "<p id='ok'><span class='label'>状态：</span>已审核</p>";
+			if(val.confirm == 1){
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>审核通过</p>";
+			}else if(val.confirm == -1){
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>审核未通过</p>";
+			}else if(val.confirm == 0){
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>待房东确认</p>";
 			}else{
-				otherInfo += "<p id='ok'><span class='label'>状态：</span>未审核</p>";
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>待审核</p>";
 			}
 		var others = "<div class='otherInfo'>"+otherInfo+"</div>";
 		//文本和其他信息合并
@@ -216,7 +220,7 @@ function dealAllUsersInfo(obj) {
 	$.each(obj.data, function(index, val) {
 		// 文本
 		var liText = "<span class='number'>"+val.id+"</span><span class='name'>"+val.userName+"</span>";
-			if(val.isLandlord == 'true'){
+			if(val.isLandlord == true){
 				liText +="<span class='identity'>房东</span>";
 			}else{
 				liText +="<span class='identity'>租客</span>";

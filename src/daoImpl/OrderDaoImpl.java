@@ -101,7 +101,7 @@ public class OrderDaoImpl extends DataBaseDao implements OrderDao{
 		String sql = "select t1.id, t1.userName, t1.phone, "
 				+ " t2.id, t2.userName, t2.phone, "
 				+ " t3.id, t3.title, t3.price, t3.address, t3.comment, "
-				+ " t4.confirm, t4.id, "
+				+ " t4.confirm, t4.id "
 				+ " from orders t4 "
 				+ " inner join user t1 on t4.userId=t1.id "
 				+ " inner join house t3 on t4.houseId=t3.id "

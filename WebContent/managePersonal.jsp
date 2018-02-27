@@ -22,7 +22,7 @@
 						<!-- <li><a href="notice.jsp">消息<span id="countNotice"></span></a></li>
 						<li><a href="login.jsp">登录</a></li>
 						<li><a href="register.jsp" target="_blank">注册</a></li>  -->
-						<li id="lgout">注销</li> 
+						<li id="logout">注销</li> 
 					</ul>		
 				</div>
 			</nav>

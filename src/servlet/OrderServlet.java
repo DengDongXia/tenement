@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import com.google.gson.GsonBuilder;
 import model.Admin;
 import model.House;
 import model.HouseModel;
+import model.Notice;
 import model.OrderModel;
 import model.User;
 import utils.ConstansUtil;
@@ -66,6 +68,13 @@ public class OrderServlet extends HttpServlet{
 						if(publisher!=null) {
 							res.put("ret", "true");
 							res.put("data",publisher.getPhone());
+					
+							Notice n1 = new Notice();
+							n1.setUserTo(publisher.getId());
+							n1.setComment("有房客下了你发布的客房订单，请确认");
+							InstanceUtil.ndi.send(n1);
+							
+							
 						}else {
 							res.put("ret", "false");
 							res.put("reason", "获取房东信息失败");
@@ -90,34 +99,49 @@ public class OrderServlet extends HttpServlet{
 						arr = InstanceUtil.odi.getOrderWithUserId(id);
 						String toPage = JsonUtil.removeQuote(map.get("toPage").toString());
 						int sumPage = ToolsUtil.getPages(arr, ConstansUtil.ORDER_COUNT_PER_PAGE);
-						if(Integer.parseInt(toPage) >sumPage) {
+						if(arr.length==0) {
+							res.put("ret", "true");
+							res.put("data", arr);
+						}else if(Integer.parseInt(toPage) >sumPage) {
 							res.put("ret", "false");
 							res.put("reason", "请求页数过大");
 						}else {
 							res.put("ret","true");
 							res.put("data", ToolsUtil.split(arr, Integer.parseInt(toPage), ConstansUtil.ORDER_COUNT_PER_PAGE));
+							res.put("nowPage", toPage);
+							res.put("sumPage", sumPage);
 						}
 					}else if("publisherId".equals(filter)) {
 						arr = InstanceUtil.odi.getOrderWithPublisher(id);
 						String toPage = JsonUtil.removeQuote(map.get("toPage").toString());
 						int sumPage = ToolsUtil.getPages(arr, ConstansUtil.ORDER_COUNT_PER_PAGE);
-						if(Integer.parseInt(toPage) >sumPage) {
+						if(arr.length==0) {
+							res.put("ret", "true");
+							res.put("data", arr);
+						}else if(Integer.parseInt(toPage) >sumPage) {
 							res.put("ret", "false");
 							res.put("reason", "请求页数过大");
 						}else {
 							res.put("ret","true");
 							res.put("data", ToolsUtil.split(arr, Integer.parseInt(toPage), ConstansUtil.ORDER_COUNT_PER_PAGE));
+							res.put("nowPage", toPage);
+							res.put("sumPage", sumPage);
 						}
-					}else if("publisherIdUnconfirm".equals("filter")) {
+					}else if("publisherIdUnconfirm".equals(filter)) {
 						arr = InstanceUtil.odi.getOrderWithPublisherUnconfirm(id);
 						String toPage = JsonUtil.removeQuote(map.get("toPage").toString());
 						int sumPage = ToolsUtil.getPages(arr, ConstansUtil.ORDER_COUNT_PER_PAGE);
-						if(Integer.parseInt(toPage) >sumPage) {
+						if(arr.length==0) {
+							res.put("ret", "true");
+							res.put("data", arr);
+						}else if(Integer.parseInt(toPage) >sumPage) {
 							res.put("ret", "false");
 							res.put("reason", "请求页数过大");
 						}else {
 							res.put("ret","true");
 							res.put("data", ToolsUtil.split(arr, Integer.parseInt(toPage), ConstansUtil.ORDER_COUNT_PER_PAGE));
+							res.put("nowPage", toPage);
+							res.put("sumPage", sumPage);
 						}
 					}else {
 						res.put("ret", "false");
@@ -129,6 +153,14 @@ public class OrderServlet extends HttpServlet{
 					String id = JsonUtil.removeQuote(map.get("id").toString());
 					if(InstanceUtil.odi.confirmOrder(id)) {
 						res.put("ret", "true");
+						OrderModel[] o = InstanceUtil.odi.getOrderWithId(id);
+						if(o.length>0) {
+							Notice n1 = new Notice();
+							n1.setUserTo(o[0].getUserId());
+							n1.setComment("房东已确认你下的客房订单");
+							InstanceUtil.ndi.send(n1);
+							
+						}
 					}else {
 						res.put("ret", "false");
 						res.put("reason", "服务器故障");
@@ -143,8 +175,20 @@ public class OrderServlet extends HttpServlet{
 					if("all".equals(filter)) {
 						OrderModel[] arr = InstanceUtil.odi.getOrder();
 						if(arr!=null) {
-							res.put("ret", "true");
-							res.put("data", arr);
+							String toPage = JsonUtil.removeQuote(map.get("toPage").toString());
+							int sumPage = ToolsUtil.getPages(arr, ConstansUtil.ORDER_COUNT_PER_PAGE);
+							if(arr.length==0) {
+								res.put("ret", "true");
+								res.put("data", arr);
+							}else if(Integer.parseInt(toPage) >sumPage) {
+								res.put("ret", "false");
+								res.put("reason", "请求页数过大");
+							}else {
+								res.put("ret","true");
+								res.put("data", ToolsUtil.split(arr, Integer.parseInt(toPage), ConstansUtil.ORDER_COUNT_PER_PAGE));
+								res.put("nowPage", toPage);
+								res.put("sumPage", sumPage);
+							}
 						}else {
 							res.put("ret", "false");
 							res.put("reason", "获取失败");
@@ -152,8 +196,20 @@ public class OrderServlet extends HttpServlet{
 					}else if("unConfirm".equals(filter)){
 						OrderModel[] arr = InstanceUtil.odi.getOrderUnconfirm();
 						if(arr!=null) {
-							res.put("ret", "true");
-							res.put("data", arr);
+							String toPage = JsonUtil.removeQuote(map.get("toPage").toString());
+							int sumPage = ToolsUtil.getPages(arr, ConstansUtil.ORDER_COUNT_PER_PAGE);
+							if(arr.length==0) {
+								res.put("ret", "true");
+								res.put("data", arr);
+							}else if(Integer.parseInt(toPage) >sumPage) {
+								res.put("ret", "false");
+								res.put("reason", "请求页数过大");
+							}else {
+								res.put("ret","true");
+								res.put("data", ToolsUtil.split(arr, Integer.parseInt(toPage), ConstansUtil.ORDER_COUNT_PER_PAGE));
+								res.put("nowPage", toPage);
+								res.put("sumPage", sumPage);
+							}
 						}else {
 							res.put("ret", "false");
 							res.put("reason", "获取失败");
@@ -168,6 +224,18 @@ public class OrderServlet extends HttpServlet{
 					String action = JsonUtil.removeQuote(map.get("action").toString());
 	
 					if(InstanceUtil.odi.auditOrder(id, Integer.parseInt(action))) {
+						OrderModel[] o = InstanceUtil.odi.getOrderWithId(id);
+						if(o.length>0) {
+							Notice n1 = new Notice();
+							n1.setUserTo(o[0].getPublihserId());
+							n1.setComment("你发布的客房信息已通过管理员审核");
+							Notice n2 = new Notice();
+							n2.setUserTo(o[0].getUserId());
+							n2.setComment("你下的客房订单已通过管理员审核");
+							InstanceUtil.ndi.send(n1);
+							InstanceUtil.ndi.send(n2);
+						}
+						
 						res.put("ret", "true");
 						
 					}else {

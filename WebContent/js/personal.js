@@ -48,7 +48,7 @@ function getData() {
 		if(obj.ret == 'true'){
 			var userInfo = obj.data[0]; 
 			isLandlord = userInfo.isLandlord;
-			if(userInfo.isLandlord == 'true'){
+			if(userInfo.isLandlord == true){
 				publisherId = userInfo.id; //保存房东的id
 				$('#owner').append('房东');
 				$('#userInfo').append("<a href='createHouseInfo.jsp'><p id='create'><span>发布新客房信息</span></p></a>");
@@ -74,7 +74,7 @@ function getData() {
 
 // 获取所有信息
 function getAllInfo(isLandlord) {
-	if(isLandlord == 'true'){
+	if(isLandlord == true){
 		getPublishInfo("1");  //获取已发布的客房信息
 		$('#chooseOrder').find('span').click(function(event) {
 			$('#chooseOrder').find('span').removeClass('choose');
@@ -267,10 +267,14 @@ function dealAllOrderInfo(obj) {
 			otherInfo += "<p><span class='label'>房东编号：</span>"+val.publisherId+"</p>";
 			otherInfo += "<p><span class='label'>昵称：</span>"+val.publisherName+"</p>";
 			otherInfo += "<p><span class='label'>手机号：</span>"+val.publisherPhone+"</p>";
-			if(val.confirm == 'true'){
-				otherInfo += "<p id='ok'><span class='label'>状态：</span>已确定</p>";
+			if(val.confirm == 1){
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>审核通过</p>";
+			}else if(val.confirm == -1){
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>审核未通过</p>";
+			}else if(val.confirm == 0){
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>待房东确认</p>";
 			}else{
-				otherInfo += "<p id='ok'><span class='label'>状态：</span>待确定</p>";
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>待审核</p>";
 			}
 		var others = "<div class='otherInfo'>"+otherInfo+"</div>";
 		//文本和其他信息合并
@@ -455,10 +459,14 @@ function dealRenterOrderInfo(obj) {
 			otherInfo += "<p><span class='label'>租客编号：</span>"+val.userId+"</p>";
 			otherInfo += "<p><span class='label'>租客昵称：</span>"+val.userName+"</p>";
 			otherInfo += "<p><span class='label'>手机号：</span>"+val.userPhone+"</p>";
-			if(val.confirm == 'true'){
+			if(val.confirm == 1){
 				otherInfo += "<p id='ok'><span class='label'>状态：</span>审核通过</p>";
+			}else if(val.confirm == -1){
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>审核未通过</p>";
+			}else if(val.confirm == 0){
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>待房东确认</p>";
 			}else{
-				otherInfo += "<p id='ok'><span class='label'>状态：</span>未审核</p>";
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>待审核</p>";
 			}
 		var others = "<div class='otherInfo'>"+otherInfo+"</div>";
 		//文本和其他信息合并

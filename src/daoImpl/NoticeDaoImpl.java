@@ -16,7 +16,7 @@ public class NoticeDaoImpl extends DataBaseDao implements NoticeDao{
 	private ResultSet rs = null;
 	@Override
 	public Notice[] getAll(String userId) {
-		String sql = "select * from notice where userTo=?";
+		String sql = "select * from notice where userTo=? order by id DESC";
 		Notice n = null;
 		ArrayList<Notice> list = new ArrayList<Notice>();
 		try {
@@ -44,7 +44,7 @@ public class NoticeDaoImpl extends DataBaseDao implements NoticeDao{
 
 	@Override
 	public Notice[] getUnread(String userId) {
-		String sql = "select * from notice where userTo=? and isRead=false";
+		String sql = "select * from notice where userTo=? and isRead=false order by id DESC";
 		Notice n = null;
 		ArrayList<Notice> list = new ArrayList<Notice>();
 		try {
