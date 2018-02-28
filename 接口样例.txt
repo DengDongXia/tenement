@@ -63,19 +63,43 @@
 				"ret":"false"
 				"reason":"失败原因"
 
-    6.获取登录用户
-        请求样例
-            "type":"statu"
-        响应样例
-            成功
-                "ret":"true"
-                "isLogin":"true/false"
-                如果isLogin为true
-                    "data":userInfo
-                如果isLogin为false则没有data字段
-            失败
-                "ret":"false"
-                "reason":"失败原因"
+	6.获取登录用户
+		请求样例
+			"type":"statu"
+		响应样例
+			成功
+				"ret":"true"
+				"isLogin":"true/false"
+				如果isLogin为true
+					"data":userInfo
+				如果isLogin为false则没有data字段
+			失败
+				"ret":"false"
+				"reason":"失败原因"
+	7.修改用户信息
+		请求样例 
+			"type":"edit"
+			"name":"新的昵称"
+			"phone":"新的手机号"
+		响应样例
+			成功
+				"ret":"true"
+			失败
+				"ret":"false"
+				"reason":"失败原因"
+		前端不需要传用户id，后台根据已经登陆的用户进行修改，如果没有登陆就请求该接口，则返回"ret":"false" "reason":"你未登录"
+
+	8.修改密码
+		请求样例
+			"type":"changePsw"
+			"oldPsw":"旧密码"
+			"newPsw":"新密码"
+		响应样例
+			成功
+				"ret":"true"
+			失败
+				"ret":"false"
+				"reason":"失败原因"
 	后台不作跳转操作，前端根据返回结果判断是否跳转，后台只记录Session,只在没有Session时作跳转(比如没有登陆就进入用户页面)
 
 客房模块 \house
@@ -228,7 +252,7 @@
 				"reason":"失败原因"
 
 	3.审核订单 - 管理员审核 (带有session验证)
-	 	请求样例
+		请求样例
 			"type":"audit"
 			"id": "订单id"
 			"action": "1或者-1" 1表示审核通过 -1表示未通过
@@ -318,7 +342,7 @@
 				"ret":"true"
 				"isAdmin":"true/false"
 				如果isAdmin为true
-                    "data":adminInfo
+					"data":adminInfo
 
 			失败
 				"ret":"false"
