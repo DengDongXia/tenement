@@ -9,4 +9,5 @@ public interface UserDao {
 	
 	
 	public User getUserWithId(String id);
+	public boolean updateInfo(User user);
 }

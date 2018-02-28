@@ -23,7 +23,7 @@
 			else{
 				$("#input-password").find(".error").remove();	
 			    var text = "<div class='error form-group'><span>"+data.reason+"</span></div>" ;
-				$("#input-password").append(text);
+				$("#input-password").parent().append(text);
 			}
     })
     .fail(function() {

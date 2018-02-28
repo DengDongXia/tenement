@@ -171,6 +171,58 @@ public class UserServlet  extends HttpServlet{
 				res.put("ret", "true");
 				res.put("isLogin", "false");
 			}
+		}else if("edit".equals(type)){
+			if(session!=null) {
+				User u = (User)session.getAttribute("user");
+				if(u!=null) {
+					String name = JsonUtil.removeQuote(map.get("name").toString());
+					String phone = JsonUtil.removeQuote(map.get("phone").toString());
+					u.setPhone(phone);
+					u.setUserName(name);
+					if(InstanceUtil.udi.updateInfo(u)) {
+						res.put("ret", "true");
+						session.setAttribute("user", u);
+					}else {
+						res.put("ret", "false");
+						res.put("reason", "ĞŞ¸ÄÊ§°Ü");
+					}
+					
+				}else {
+					res.put("ret", "false");
+					res.put("reason", "ÄãÎ´µÇÂ¼");
+				}
+			}else {
+				res.put("ret", "false");
+				res.put("reason", "ÄãÎ´µÇÂ¼");
+			}
+		}else if("changePsw".equals(type)){
+			if(session!=null) {
+				User u = (User)session.getAttribute("user");
+				if(u!=null) {
+					String oldPsw = JsonUtil.removeQuote(map.get("oldPsw").toString());
+					String newPsw = JsonUtil.removeQuote(map.get("newPsw").toString());
+					if(u.getPassword().equals(oldPsw)) {
+						u.setPassword(newPsw);
+						if(InstanceUtil.udi.updateInfo(u)) {
+							res.put("ret", "true");
+							session.setAttribute("user", u);
+						}else {
+							res.put("ret", "false");
+							res.put("reason", "ĞŞ¸ÄÊ§°Ü£¬·şÎñÆ÷¹ÊÕÏ");
+						}
+					}else {
+						res.put("ret", "false");
+						res.put("reason", "ĞŞ¸ÄÊ§°Ü£¬Ô­ÃÜÂë´íÎó");
+					}
+
+				}else {
+					res.put("ret", "false");
+					res.put("reason", "ÄãÎ´µÇÂ¼");
+				}
+			}else {
+				res.put("ret", "false");
+				res.put("reason", "ÄãÎ´µÇÂ¼");
+			}
 		}else {
 			res.put("ret", "false");
 			res.put("reason", "ÄúÎ´µÇÂ¼");

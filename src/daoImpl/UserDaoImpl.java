@@ -158,4 +158,15 @@ public class UserDaoImpl extends DataBaseDao implements UserDao{
 		return user!=null;
 	}
 
+	@Override
+	public boolean updateInfo(User user) {
+		String sql = "update user set psw=?, userName=?, phone=? where id=?";
+		String[] params = {user.getPassword(), user.getUserName(), user.getPhone(), user.getId()};
+		return this.executeSQL(sql, params)==1;
+		
+	}
+	
+	
+	
+
 }
