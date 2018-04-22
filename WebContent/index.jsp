@@ -15,6 +15,7 @@
 			<div></div>
 			<div class="shortCut">	
 				<ul id="nav">
+					<li><a href="new.jsp">查看新闻</a></li>
 					<li><a href="notice.jsp">消息<span id="countNotice"></span></a></li>
 				</ul>		
 			</div>

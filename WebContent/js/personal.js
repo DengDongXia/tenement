@@ -1,7 +1,35 @@
 $().ready(function() {
 	isLogin();   //判断用户是否已经登录
 	getData();
+	getNoticeNum();  //获取消息数量
 });
+
+// 异步请求消息数量
+function getNoticeNum() {
+	$.ajax({
+		// url: 'data/notice.json',
+		url: './notice',
+		type: 'POST',
+		dataType: 'json',
+		data: JSON.stringify({
+			"type":"count",
+		}),
+	})
+	.done(function(obj) {
+		if(obj.ret == 'true'){
+			$("#countNotice").append("("+obj.data+")");
+		}else{
+			alert("消息数量获取失败原因："+obj.reason);
+		}
+	})
+	.fail(function() {
+		alert("消息数量获取失败");
+	})
+	.always(function() {
+		// console.log("complete");
+	});
+}
+
 
 //判断用户是否已经登录，未登录则跳转到登录页面
 function isLogin() {
@@ -48,7 +76,7 @@ function getData() {
 		if(obj.ret == 'true'){
 			var userInfo = obj.data[0]; 
 			isLandlord = userInfo.isLandlord;
-			if(userInfo.isLandlord == 'true'){
+			if(userInfo.isLandlord == true){
 				publisherId = userInfo.id; //保存房东的id
 				$('#owner').append('房东');
 				$('#userInfo').append("<a href='createHouseInfo.jsp'><p id='create'><span>发布新客房信息</span></p></a>");
@@ -74,7 +102,7 @@ function getData() {
 
 // 获取所有信息
 function getAllInfo(isLandlord) {
-	if(isLandlord == 'true'){
+	if(isLandlord == true){
 		getPublishInfo("1");  //获取已发布的客房信息
 		$('#chooseOrder').find('span').click(function(event) {
 			$('#chooseOrder').find('span').removeClass('choose');
@@ -86,8 +114,11 @@ function getAllInfo(isLandlord) {
 			else if($(this).is('#indeterminate')){
 				getIndeterminateInfo("1"); //获取待确认订单
 			}
-			else{
+			else if($(this).is('#allorders')){
 				getAllOrder("1");   //获取所有订单
+			}
+			else{
+				getAllCollect();   //获取所有收藏
 			}
 		});
 	}else{
@@ -95,7 +126,6 @@ function getAllInfo(isLandlord) {
 		getRenterOrder("1");    //租客查看其所有订单
 	}
 }
-
 
 /*以下为房东获取对应信息的函数*/
 //获取已发布的客房信息
@@ -267,10 +297,14 @@ function dealAllOrderInfo(obj) {
 			otherInfo += "<p><span class='label'>房东编号：</span>"+val.publisherId+"</p>";
 			otherInfo += "<p><span class='label'>昵称：</span>"+val.publisherName+"</p>";
 			otherInfo += "<p><span class='label'>手机号：</span>"+val.publisherPhone+"</p>";
-			if(val.confirm == 'true'){
-				otherInfo += "<p id='ok'><span class='label'>状态：</span>已确定</p>";
+			if(val.confirm == 1){
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>审核通过</p>";
+			}else if(val.confirm == -1){
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>审核未通过</p>";
+			}else if(val.confirm == 0){
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>待房东确认</p>";
 			}else{
-				otherInfo += "<p id='ok'><span class='label'>状态：</span>待确定</p>";
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>待审核</p>";
 			}
 		var others = "<div class='otherInfo'>"+otherInfo+"</div>";
 		//文本和其他信息合并
@@ -408,6 +442,25 @@ function okOrder() {
 /*以下为租客获取对应信息的函数*/
 var nowOrderPage = "1" ;
 function getRenterOrder(toPage) {
+	$('#allOrder').find('ul').remove(); //移除原有的信息
+	$('#allOrder').append('<p class="chooseOrder" id="chooseOrder"><span id="allRenterOrder" class="choose">所有订单</span><span id="allCollect">查看收藏</span></p>');  //插入背景
+	// 为两个切换按钮绑定事件
+	$('#chooseOrder').find('span').click(function(event) {
+		$('#chooseOrder').find('span').removeClass('choose');
+		$(this).addClass('choose');
+		$('#allOrder').find('ul').remove(); //移除原有的信息
+		if($(this).is('#allRenterOrder')){
+			getAllrenterOrder("1");   //获取所有订单
+		}
+		else{
+			getAllCollect();   //获取所有收藏
+		}
+	});
+	getAllrenterOrder(toPage);
+}
+
+// 获取所有订单
+function getAllrenterOrder(toPage){
 	$.ajax({
 		// url: 'data/order.json',
 		url: './order',
@@ -439,7 +492,7 @@ function getRenterOrder(toPage) {
 
 // 处理获取所有订单返回的数据
 function dealRenterOrderInfo(obj) {
-	$('#allOrder').find('ul').remove(); //移除原有的信息
+	// $('#allOrder').find('ul').remove(); //移除原有的信息
 	$('#allOrder').append("<ul id='allReordersInfo' class='orderInfo'></ul>");  //插入背景
 	$.each(obj.data, function(index, val) {
 		// 文本
@@ -455,10 +508,14 @@ function dealRenterOrderInfo(obj) {
 			otherInfo += "<p><span class='label'>租客编号：</span>"+val.userId+"</p>";
 			otherInfo += "<p><span class='label'>租客昵称：</span>"+val.userName+"</p>";
 			otherInfo += "<p><span class='label'>手机号：</span>"+val.userPhone+"</p>";
-			if(val.confirm == 'true'){
+			if(val.confirm == 1){
 				otherInfo += "<p id='ok'><span class='label'>状态：</span>审核通过</p>";
+			}else if(val.confirm == -1){
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>审核未通过</p>";
+			}else if(val.confirm == 0){
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>待房东确认</p>";
 			}else{
-				otherInfo += "<p id='ok'><span class='label'>状态：</span>未审核</p>";
+				otherInfo += "<p id='ok'><span class='label'>状态：</span>待审核</p>";
 			}
 		var others = "<div class='otherInfo'>"+otherInfo+"</div>";
 		//文本和其他信息合并
@@ -495,6 +552,15 @@ $('#logout').click(function(event) {
 	});
 });
 /*以上为点击注销按钮时，触发注销事件*/
+
+// 向管理员发送信息
+$('#contact').click(function(event) {
+	$('.contactMange').show();
+});
+
+$('.contactMange').click(function(event) {
+	$('.contactMange').hide();
+});
 
 /*修改资料部分*/
 $('#changeData').click(function(event) {
@@ -545,3 +611,85 @@ $('#okChange').click(function(event) {
 	}
 });
 /*修改资料部分*/
+
+// 公共部分
+ //获取所有收藏
+function getAllCollect(){
+	$.ajax({
+		// url: 'data/house.json',
+		url: './extra',
+		type: 'POST',
+		dataType: 'json',
+		data: JSON.stringify({
+			"type":"getCollect"
+		}),
+	})
+	.done(function(obj) {
+		if(obj.ret == 'true'){
+			// 将收藏的房子信息渲染出来
+			setCollectdata(obj.data);
+		}
+		else
+			alert("获取收藏信息出错！原因：" + obj.reason);
+	})
+	.fail(function() {
+		alert("页面获取出错");
+	})
+	.always(function() {
+		// console.log("complete");
+	});
+}  
+
+function setCollectdata(data){
+	$('#allOrder').find('ul').remove(); //移除原有的信息
+	$('#allOrder').append("<ul id='publishedInfo'></ul>");  //插入背景
+	$.each(data, function(index, val) {
+		// 照片
+		var pics = "<div class='housePic'><img src='"+val.pic[0]+"' alt='被出租的房屋图片'></div>";
+		// 文本
+		var contentText = "<p class='contentTitle'>"+val.title+"</p><p class='contentComment'>"+val.comment+"</p>";
+		var contentAddress = "<p class='city'><span><img src='images/address.png'></span><span>"+val.province+">"+val.city+">"+val.region+"</span></p>";
+			contentAddress += "<p class='adress'>详细地址：<span>"+val.address+"</span></p>";
+		var contents = "<a href='houseDetail.jsp?houseId="+val.id+"' target='_blank'><div class='text'>"+contentText+contentAddress+"</div></a>";
+		// 其他信息
+		var otherInfo = "<p class='price'>月租：<span>"+val.price+"元/月</span></p>";
+			otherInfo += "<p class='count'>剩余套间：<span>"+val.count+"</span></p>";
+		var others = "<div class='otherInfo'>"+otherInfo+"</div>";
+		//文本和其他信息合并
+		var allContents = "<div class='aboutText'>"+contents+others+"</div>";
+		//添加完整的li
+		$('#publishedInfo').append("<li>"+pics+allContents+"</li>");
+	});
+}
+
+// 向管理员发送信息
+$('#sendMessage').click(function(){
+	if($("#message").val() == ''){
+		alert("请先填写要发送的内容");
+	}else{
+		$.ajax({
+			// url: 'data/sendMessage.json',
+			url: './extra',
+			type: 'POST',
+			dataType: 'json',
+			data: JSON.stringify({
+				"type":"sendMessage",
+				"comment":$("#message").val()
+			}),
+		})
+		.done(function(obj) {
+			if(obj.ret == 'true'){
+				alert("发送成功");
+				window.location.href = "./personal.jsp";
+			}
+			else
+				alert("发送出错");
+		})
+		.fail(function() {
+			alert("发送出错");
+		})
+		.always(function() {
+			// console.log("complete");
+		});
+	}
+});

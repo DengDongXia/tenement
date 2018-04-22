@@ -18,7 +18,9 @@
 				<div class="shortCut detailNav">
 					<ul>
 						<li class="index"><a href="">房屋租赁系统管理页面</a></li>
-						<li><a href="managePersonal.jsp">个人中心</a></li>
+						<li><a href="manageNew.jsp">查看新闻</a></li>
+						<li><a href="manageNotice.jsp">消息</a><span id="countNotice"></span></li>
+						<li><a href="managePersonal.jsp">管理中心</a></li>
 						<!-- <li><a href="notice.jsp">消息<span id="countNotice"></span></a></li>
 						<li><a href="login.jsp">登录</a></li>
 						<li><a href="register.jsp" target="_blank">注册</a></li>  -->
@@ -32,11 +34,12 @@
 			<div class="userInfo">
 				<div ><span id="imgBg"><img src="images/house.jpg" alt="用户头像"></span></div>
 				<p class="owner">管理员</p>
+				<p id="createNew"><span>发布新闻</span></p>
 			</div>
 			<div class="orderInfos">
 				<div class="allOrder" id='allOrder'>
 					<!-- <span>暂时没有订单</span> -->
-					<p class="chooseOrder" id='chooseOrder'><span id="auditing" class="choose">待审核订单</span><span id="allOrders">所有订单</span><span id='allUser'>所有用户</span></p>
+					<p class="chooseOrder" id='chooseOrder'><span id="auditing" class="choose">待审核订单</span><span id="allOrders">所有订单</span><span id='allUser'>所有用户</span><span id='published'>所有客房</span></p>
 					<!-- 管理员未审核的订单 -->
 					<!-- <ul id="indeterminateInfo" class="orderInfo">
 						<li>
@@ -102,6 +105,24 @@
 		</div>
 		<!-- 脚部网站信息 -->
 		<footer>脚部相关信息</footer>
+		<div class="changedataBg">
+			<div class="mainData">
+				<p><span>修改个人资料</span></p>
+				<input type="hidden" name="" id="new-UserId" value="">
+				<p><input type="text" name="" id='newName' placeholder='新的昵称'></p>
+				<p><input type="text" name="" id='newPhone' placeholder='新的手机号'></p>
+				<p><input type="button" name="" id='okChange' value='确定修改'></p>
+			</div>
+		</div>
+		<!--  -->
+		<div class="createNew">
+				<div class="mainData">
+					<p><span>发布新闻</span></p>
+					<p><input type="text" name="" id='newTitle' placeholder='新闻标题'></p>
+					<p><input type="text" name="" id='newContent' placeholder='新闻内容'></p>
+					<p><input type="button" name="" id='publishNew' value='发布'></p>
+				</div>
+			</div>
 	</div>
 <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 <script src="js/managePersonal.js"></script>

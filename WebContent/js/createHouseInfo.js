@@ -66,7 +66,7 @@ function submitForm(path) {
 function judgeForm(){
 	if($('#infoTitle').val() == '' ||  $('#province').val() == '' || $('#city').val() == '' ||
 		$('#region').val() == '' || $('#address').val() == '' || $('#price').val() == '' ||
-		$('#comment').val() == '' || $('#count').val() == '' || $('#pic').val() == ''){
+		$('#comment').val() == '' || $('#count').val() == '' || /*$('#pic').val() == '' */){
 		alert("请将表单填完整，再进行发布");
 		return false;
 	}

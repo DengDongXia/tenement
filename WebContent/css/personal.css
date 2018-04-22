@@ -72,6 +72,14 @@ header{
 	border-radius: 8px;
 	cursor: pointer;
 }
+#changeDataP span{
+	display: inline-block;
+	/* padding: 10px 20px; */
+	/* border: 1px solid #BC1108;; */
+	color: #BC1108;
+	border-radius: 8px;
+	cursor: pointer;
+}
 
 .change{
 	text-align: center;
@@ -94,7 +102,7 @@ header{
 
 /*所有已发布客房信息样式*/
 .orderInfos{
-	width: 74.92%;
+	width: 74%;
 	min-height: 500px;
 	display: inline-block;
 	border-left: 1px solid #ececec;
@@ -246,7 +254,7 @@ header{
 	position: relative;
 }
 
-.changedataBg{
+.changedataBg,.contactMange{
 	display: none;
 	position: absolute;
 	top: 0;
@@ -284,20 +292,32 @@ header{
 	font-size: 16px;
 }
 
-#okChange{
+#okChange,#sendMessage{
 	height: auto;
 	background-color: #ffffff;
 	color: #069215;
 	border: 1px solid #069215;
 }
 
-#okChange:hover{
+#okChange:hover,#sendMessage:hover{
 	color: #ffffff;
 	background-color: #069215;
 }
 /*修改资料部分*/
 
+#publishedInfo .aboutText .text{
+	width: 77%;
+	padding-right: 2%;
+	border-right: 1px dotted #ddd;
+}
 
+#message{
+	margin-top: 10px;
+	padding: 10px;
+	line-height: 30px;
+	font-size:14px;
+	color: #444;
+}
 
 
 

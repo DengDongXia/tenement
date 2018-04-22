@@ -17,6 +17,7 @@
 				<div class="shortCut detailNav">
 					<ul id="nav">
 						<li class="index"><a href="index.jsp">房屋租赁主页</a></li>
+						<li><a href="new.jsp">查看新闻</a></li>
 						<li><a href="notice.jsp">消息<span id="countNotice"></span></a></li>
 					</ul>		
 				</div>
@@ -44,6 +45,7 @@
 					<div class="otherInfo">
 						<p>月租：<span class="price" id="price"></span></p>
 						<p><span id="count">剩余套间：</span></p>
+						<p><span>收藏：</span><span id="collect"><img src="" alt="是否收藏的图标" title=""></span></p>
 						<p class="order" id="order"></a>下单</p>
 					</div>
 				</div>

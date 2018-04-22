@@ -83,9 +83,10 @@ header{
 
 /*所有已发布客房信息样式*/
 .orderInfos{
-	width: 74.92%;
+	width: 74%;
 	min-height: 500px;
-	float: left;
+	/*float: left;*/
+	display: inline-block;
 	border-left: 1px solid #ececec;
 }
 
@@ -142,6 +143,7 @@ header{
 .orderInfo .aboutText{
 	width: 100%;
 	padding-left: 0;
+	display: inline-block;
 }
 
 .orderInfo .aboutText a{
@@ -240,8 +242,17 @@ header{
 	line-height: 30px;
 }
 
+#userInfos li .number{
+	width: 10%;
+}
 #userInfos li .identity{
 	width: 10%;
+}
+#userInfos li .action{
+	width: 10%;
+}
+#userInfos li .change{
+	width: 9%;
 }
 /*管理员查询所有用户样式*/
 
@@ -252,7 +263,98 @@ header{
 }
 
 
+#switchPage{
+	width: auto;
+}
 
+/*修改资料部分*/
+.maincontent{
+	position: relative;
+}
 
+.changedataBg,.createNew{
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.5);
+}
+
+.mainData{
+	width: 30%;
+	margin: 200px auto;
+	padding: 30px;
+	background-color: #ffffff;
+	border-radius: 4px;
+	color: #444;
+}
+span.change{
+	display: inline-block;
+	padding: 10px 20px;
+	border: 1px solid #BC1108;;
+	color: #BC1108;
+	border-radius: 8px;
+	cursor: pointer;
+}
+
+.mainData p{
+	text-align: center;
+}
+
+.mainData p span{
+	font-size: 20px;
+}
+
+.mainData input{
+	width: 65%;
+	height: 35px;
+	margin: 5px auto;
+	line-height: 35px;
+	padding: 5px 20px;
+	border: 1px solid #ececec;
+	border-radius: 4px;
+	font-size: 16px;
+}
+
+#okChange,#publishNew{
+	height: auto;
+	background-color: #ffffff;
+	color: #069215;
+	border: 1px solid #069215;
+}
+
+#okChange:hover{
+	color: #ffffff;
+	background-color: #069215;
+}
+/*修改资料部分*/
+
+/* 补充样式 */
+#publishedInfo .aboutText .text{
+	width: 77%;
+	padding-right: 2%; 
+	border-right: 1px dashed #ddd;
+}
+
+#createNew{
+	padding-top: 10px;
+	text-align: center;
+}
+
+#createNew span{
+	color: #BC1108;
+	border: 1px solid #BC1108;
+	padding: 10px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+#createNew span:hover{
+	color: #fff;
+	background-color: #BC1108;
+}
+/* 补充样式 */
 
 

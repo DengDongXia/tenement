@@ -1,6 +1,33 @@
 $().ready(function() {
 	isadminLogin();   //判断是否是管理员已经登录,并获取相关数据
+	getNoticeNum();  //获取消息数量
 });
+
+// 异步请求消息数量
+function getNoticeNum() {
+	$.ajax({
+		// url: 'data/notice.json',
+		url: './notice',
+		type: 'POST',
+		dataType: 'json',
+		data: JSON.stringify({
+			"type":"count",
+		}),
+	})
+	.done(function(obj) {
+		if(obj.ret == 'true'){
+			$("#countNotice").append("("+obj.data+")");
+		}else{
+			alert("消息数量获取失败原因："+obj.reason);
+		}
+	})
+	.fail(function() {
+		alert("消息数量获取失败");
+	})
+	.always(function() {
+		// console.log("complete");
+	});
+}
 
 //判断用户是否已经登录，未登录则跳转到登录页面
 // 还没进行是否是管理员的判断
@@ -46,6 +73,9 @@ function getAllInfo() {
 		}
 		else if($(this).is('#allOrders')){
 			getAllOrder("1"); //获取所有订单
+		}
+		else if($(this).is("#published")){
+			getPublishInfo("1"); //获取所有客房
 		}
 		else{
 			getAllUsers("1");   //获取所有用户
@@ -181,6 +211,62 @@ function dealAllOrderInfo(obj){
 		$('#allordersInfo').append("<li>"+allContents+"</li>");
 	});
 }
+/*以下为管理员获取对应信息的函数*/
+//获取已发布的客房信息
+var nowPublishPage = "1"; //保存页号数
+function getPublishInfo(toPage) {
+	$.ajax({
+		// url: 'data/house.json',
+		url: './house',
+		type: 'POST',
+		dataType: 'json',
+		data: JSON.stringify({
+			"type":"all",
+			"toPage": toPage,
+		}),
+	})
+	.done(function(obj) {
+		if(obj.ret == 'true'){
+			nowPublishPage = obj.nowPage; //保存页号数
+			dealPublishInfo(obj);  //处理返回的信息
+			addButton(nowPublishPage,obj.sumPage,4); //添加分页按钮
+		}
+		else
+			alert("获取信息出错！原因：" + obj.reason);
+	})
+	.fail(function() {
+		alert("页面获取出错");
+	})
+	.always(function() {
+		// console.log("complete");
+	});
+}
+
+//处理获取已发布的客房信息后返回的信息
+function dealPublishInfo(obj) {
+	$('#allOrder').find('ul').remove(); //移除原有的信息
+	$('#allOrder').append("<ul id='publishedInfo'></ul>");  //插入背景
+	$.each(obj.data, function(index, val) {
+		// 照片
+		var pics = "<div class='housePic'><img src='"+val.pic[0]+"' alt='被出租的房屋图片'></div>";
+		// 文本
+		var contentText = "<p class='contentTitle'>"+val.title+"</p><p class='contentComment'>"+val.comment+"</p>";
+		var contentAddress = "<p class='city'><span><img src='images/address.png'></span><span>"+val.province+">"+val.city+">"+val.region+"</span></p>";
+			contentAddress += "<p class='adress'>详细地址：<span>"+val.address+"</span></p>";
+		var contents = "<div class='text'>"+contentText+contentAddress+"</div>";
+		// 其他信息
+		var otherInfo = "<p class='price'>月租：<span>"+val.price+"元/月</span></p>";
+			otherInfo += "<p class='count'>剩余套间：<span>"+val.count+"</span></p>";
+			//otherInfo += "<p><span class='delete' id='delete'>删除</span>";
+			// otherInfo += "<a href='updateHouseInfoManage.jsp?houseId="+val.id+"'><span class='edit' id='edit'>编辑</span></p></a>";
+		var others = "<div class='otherInfo'>"+otherInfo+"</div>";
+		//文本和其他信息合并
+		var allContents = "<div class='aboutText'>"+contents+others+"</div>";
+		//添加完整的li
+		$('#publishedInfo').append("<li>"+pics+allContents+"</li>");
+	});
+	//clickDelete();  //对获取客房信息后的删除键进行监听
+}
 
 //获取所有用户
 var nowAllUserPage = "1" ;
@@ -216,7 +302,7 @@ function getAllUsers(toPage) {
 function dealAllUsersInfo(obj) {
 	$('#allOrder').find('ul').remove(); //移除原有的信息
 	$('#allOrder').append("<ul id='userInfos' class='orderInfo'></ul>");  //插入背景
-	$('#userInfos'). append('<li><span class="number">编号</span><span class="name">用户昵称</span><span class="identity">身份</span><span class="phone">手机号</span><span class="email">邮箱</span></li>');
+	$('#userInfos'). append('<li><span class="number">编号</span><span class="name">用户昵称</span><span class="identity">身份</span><span class="phone">手机号</span><span class="email">邮箱</span><span class="action">操作</span></li>');
 	$.each(obj.data, function(index, val) {
 		// 文本
 		var liText = "<span class='number'>"+val.id+"</span><span class='name'>"+val.userName+"</span>";
@@ -226,15 +312,84 @@ function dealAllUsersInfo(obj) {
 				liText +="<span class='identity'>租客</span>";
 			}
 			liText +="<span class='phone'>"+val.phone+"</span><span class='email'>"+val.email+"</span>";
+			liText +="<span class='change' data-id='"+val.id+"' data-phone='"+val.phone+"' data-name='"+val.userName+"'>编辑信息</span>"
 		//添加完整的li
 		$('#userInfos').append("<li>"+liText+"</li>");
+		prepareChange();
 	});
 }
 /*以上为管理员获取对应信息的函数*/
+/*修改资料部分*/
+function prepareChange(){
+	$('.change').each(function(){
+		
+		$(this).click(function(id, phone, name){
+			$('#newName').val($(this).attr("data-name"));
+			$('#newPhone').val($(this).attr("data-phone"));
+			$('#new-UserId').val($(this).attr("data-id"));
+			$('.changedataBg').show();
+		});
+	});
+}
+
+$('#createNew').click(function(){
+	$('.createNew').show();
+});
+
+$('.createNew').click(function(){
+	$('.createNew').hide();
+});
+
+$('.changedataBg').click(function(event) {
+	$('.changedataBg').hide();
+});
+
+$('.mainData').click(function(event) {
+		event.stopPropagation();  //停止父元素的点击事件冒泡
+	});
+
+// 提交修改事件的参数
+$('#okChange').click(function(event) {
+	if($('#newName').val() == '' || $('#newPhone').val() == ''){
+		alert("请将表单填写完整再提交");
+	}else{
+		var phoneReg = /^1[3|4|5|7|8][0-9]{9}$/;  //手机匹配的正则表达式
+		if(!phoneReg.test($('#newPhone').val())){
+			alert("请输入正确的手机号码");
+		}else{
+			$.ajax({
+				url: './user',
+				type: 'POST',
+				dataType: 'json',
+				data: JSON.stringify({
+					"type":"edit",
+					"id": $('#new-UserId').val(),
+					"name":$('#newName').val(),
+					"phone":$('#newPhone').val()
+				}),
+			})
+			.done(function(obj) {
+				if(obj.ret == 'true'){
+					alert("修改成功！");
+					window.location.href = "./managePersonal.jsp";
+				}
+				else
+					alert("修改失败！原因：" + obj.reason);
+			})
+			.fail(function() {
+				alert("页面获取出错");
+			})
+			.always(function() {
+				// console.log("complete");
+			});
+		}
+	}
+});
+/*修改资料部分*/
 
 /*对客房或订单信息进行的相关操作*/
 //添加分页按钮
-// type表示当前页面信息类型，0：获取发表的客房信息；1：未确定订单；2：房东所有订单；3：租客所有订单
+// type表示当前页面信息类型，0：获取发表的客房信息；1：未确定订单；2：房东所有订单；3：租客所有订单  4管理员所有客房
 function addButton(nowPage,sumPage,type) {
 	$('#switchPage').remove();
 	$('#allOrder').find('ul').append("<p id='switchPage'></p>");
@@ -271,7 +426,9 @@ function addButton(nowPage,sumPage,type) {
 		}
 		else if(type == 1){
 			getAllOrder(nowPage);
-		} 
+		}else if(type == 4){
+			getPublishInfo(nowPage);
+		}
 		else{
 			getAllUsers(nowPage);
 		}
@@ -326,6 +483,41 @@ function clickAudit() {
 }
 
 /*对客房或订单信息进行的相关操作*/
+
+/*发布新闻*/
+$('#publishNew').click(function(){
+	if($('#newTitle').val() == '' || $('#newContent').val() == ''){
+		alert("请先将表单填写完整");
+	}else{
+		$.ajax({
+			// url:'data/createNew.json',
+			url: './extra',
+			type: 'POST',
+			dataType: 'json',
+			data: JSON.stringify({
+				"type":"publish",
+				"title":$('#newTitle').val(),
+				"content":$('#newContent').val()
+			}),
+		})
+		.done(function(obj) {
+			if(obj.ret == 'true'){
+				alert("发布成功！");
+				location.href = "./managePersonal.jsp";
+			}
+			else
+				alert("发布出错！");
+		})
+		.fail(function() {
+			alert("页面出错");
+		})
+		.always(function() {
+			// console.log("complete");
+		});
+	}
+});
+/*发布新闻*/
+
 
 /*以下为点击注销按钮时，触发注销事件*/
 $('#logout').click(function(event) {

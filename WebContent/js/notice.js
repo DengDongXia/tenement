@@ -1,7 +1,35 @@
 $().ready(function() {
 	aboutUser();    //获取用户是否登录信息，进行相关的功能操作
 	getUnread(); //页面加载后获取所有未读信息
+	getNoticeNum();  //获取消息数量
 });
+
+// 异步请求消息数量
+function getNoticeNum() {
+	$.ajax({
+		url: 'data/notice.json',
+		// url: './notice',
+		type: 'POST',
+		dataType: 'json',
+		data: JSON.stringify({
+			"type":"count",
+		}),
+	})
+	.done(function(obj) {
+		if(obj.ret == 'true'){
+			$("#countNotice").append("("+obj.data+")");
+		}else{
+			alert("消息数量获取失败原因："+obj.reason);
+		}
+	})
+	.fail(function() {
+		alert("消息数量获取失败");
+	})
+	.always(function() {
+		// console.log("complete");
+	});
+}
+
 
 /*以下为判断用户是否登录，从而显示对应的导航功能*/
 function aboutUser() {

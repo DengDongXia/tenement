@@ -1,0 +1,16 @@
+@charset 'utf-8';
+.time{
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+}
+
+.newTitle{
+    font-weight: bold;
+    line-height: 45px;
+    font-size: 18px;
+}
+
+.newContent{
+    text-indent: 2em;
+}

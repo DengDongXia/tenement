@@ -1,0 +1,13 @@
+{
+	"ret":"true",
+	"isLogin":"true",
+	"data":{
+		"id":"1",
+		"email":"",
+		"userName":"用户昵称",
+		"psw":"用户密码",
+		"head":"用户头像",
+		"isLandlord":true,
+		"phone":"手机号"
+	}
+}

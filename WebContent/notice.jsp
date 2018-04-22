@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>管理员管理页面———房屋租赁系统</title>
+	<title>消息页面———房屋租赁系统</title>
 	<link rel="stylesheet" type="text/css" href="css/common.css">
 	<link rel="stylesheet" type="text/css" href="css/notice.css">
 </head>
@@ -17,7 +17,10 @@
 				<div class="shortCut detailNav">
 					<ul id="nav">
 						<li class="index"><a href="index.jsp">房屋租赁主页</a></li>
+						<li><a href="new.jsp">查看新闻</a></li>
 						<li><a href="notice.jsp">消息<span id="countNotice"></span></a></li>
+						<li><a href="personal.jsp">个人中心<span id="countNotice"></span></a></li>
+						<li id="logout">注销</li>
 					</ul>		
 				</div>
 			</nav>

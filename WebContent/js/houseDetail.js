@@ -1,6 +1,7 @@
 $().ready(function() {
 	aboutUser();    //获取用户是否登录信息，进行相关的功能操作
 	getDetailInfo();  //获取该房子的详细信息
+	getNoticeNum();  //获取消息数量
 });
 
 /*以下为判断用户是否登录，从而显示对应的导航功能*/
@@ -68,6 +69,42 @@ function getDetailInfo() {
 		}
 		else
 			alert("获取客房信息失败！原因：" + obj.reason);
+	})
+	.fail(function() {
+		alert("页面获取出错");
+	})
+	.always(function() {
+		// console.log("complete");
+	});
+
+	// 获取当前房子是否已被该用户收藏
+	judgeCollectStatus(houseId);
+}
+
+// 异步请求判断房子是否已被收藏
+var collectStatus = "false";
+function judgeCollectStatus(houseId){
+	$.ajax({
+		// url:'data/judgeCollect.json',
+		url: './extra',
+		type: 'POST',
+		dataType: 'json',
+		data: JSON.stringify({
+			"type":"confirmCollect",
+			"houseId":houseId
+		}),
+	})
+	.done(function(obj) {
+		if(obj.ret == 'true'){
+			collectStatus = obj.data;   //记录收藏状态
+			if(obj.data == 'true'){
+				$('#collect').find("img").attr("src","images/collect_r.png");
+				$('#collect').find("img").attr("title","取消收藏");
+			}else{
+				$('#collect').find("img").attr("src","images/collect_b.png");
+				$('#collect').find("img").attr("title","点击收藏");
+			}
+		}
 	})
 	.fail(function() {
 		alert("页面获取出错");
@@ -147,6 +184,79 @@ $('#order').click(function(event) {
 });
 /*点击下单按钮*/
 
+
+// 给收藏按钮绑定事件
+$('#collect').click(function(){
+	if(collectStatus == 'true'){
+		changeCollect("delCollect");  //添加收藏
+		collectStatus = 'false';
+	}else{
+		changeCollect("addCollect");  //删除收藏
+		collectStatus = 'true';
+	}
+});
+
+//改变收藏状态
+function changeCollect(type){
+	var houseId = getUrlId('houseId');  //获取url中的客房id
+	$.ajax({
+		// url:'data/changeCollect.json',
+		url: './extra',
+		type: 'POST',
+		dataType: 'json',
+		data: JSON.stringify({
+			"type":type,
+			"houseId":houseId
+		}),
+	})
+	.done(function(obj) {
+		if(obj.ret == 'true'){
+			if(collectStatus == 'true'){
+				$('#collect').find("img").attr("src","images/collect_r.png");
+				$('#collect').find("img").attr("title","取消收藏");
+				
+			}else{
+				$('#collect').find("img").attr("src","images/collect_b.png");
+				$('#collect').find("img").attr("title","点击收藏");
+				
+			}
+		}
+		else
+			alert("操作失败！原因：" + obj.reason);
+	})
+	.fail(function() {
+		alert("页面获取出错");
+	})
+	.always(function() {
+		// console.log("complete");
+	});
+}
+
+// 异步请求消息数量
+function getNoticeNum() {
+	$.ajax({
+		// url: 'data/notice.json',
+		url: './notice',
+		type: 'POST',
+		dataType: 'json',
+		data: JSON.stringify({
+			"type":"count",
+		}),
+	})
+	.done(function(obj) {
+		if(obj.ret == 'true'){
+			$("#countNotice").append("("+obj.data+")");
+		}else{
+			alert("消息数量获取失败原因："+obj.reason);
+		}
+	})
+	.fail(function() {
+		alert("消息数量获取失败");
+	})
+	.always(function() {
+		// console.log("complete");
+	});
+}
 
 /*以下为点击注销按钮时，触发注销事件*/
 function setLogout(){
